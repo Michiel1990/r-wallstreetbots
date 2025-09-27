@@ -3,7 +3,7 @@ This document outlines the essential hardware and configuration requirements nee
 
 ## 1. Hardware
 * **Raspberry Pi 5:** The core computing device for the project. It will be the server that runs our "bot".
-* Henceforth always aliased as "**pi**"
+* Henceforth always aliased as "**pi**" in filenames, code, etc.
 
 ## 2. Operating System & Access
 * **OS:** **Raspberry Pi OS Lite (64-bit)**
