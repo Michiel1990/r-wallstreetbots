@@ -13,6 +13,7 @@ sudo mkdir r-wallstreetbots
 # Clone the root project folder (sudo is needed for writing files, the -E preserves the env which holds the SSH agent)
 cd /home/git-projects/r-wallstreetbots
 sudo -E git clone git@github.com:Michiel1990/r-wallstreetbots.git
+git config --global --add safe.directory /home/git-projects/r-wallstreetbots
 
 # Create setup folder and its contents
 touch readme.md
