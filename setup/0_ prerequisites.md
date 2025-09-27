@@ -22,11 +22,11 @@ ssh-keygen -t ed25519 -C "my_email@icloud.com" -f ~/.ssh/my_key_name
     # --> public key manually uploaded to https://github.com/settings/keys
 
 #test key
-ssh -i ~/.ssh/macbook_github_key -T git@github.com
+ssh -i ~/.ssh/my_key_name -T git@github.com
 
 #add key to agent
 eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/macbook_github_key
+ssh-add ~/.ssh/my_key_name
 ```
 ### Repo
 * a new repository was created manually from the Github web interface
