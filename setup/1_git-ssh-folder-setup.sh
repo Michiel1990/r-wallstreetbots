@@ -1,5 +1,5 @@
 #generate keypair locally
-ssh-keygen -t ed25519 -C "smulders.michiel@icloud.com" -f ~/.ssh/macbook_github_key
+ssh-keygen -t ed25519 -C "my_email@icloud.com" -f ~/.ssh/macbook_github_key
 
 #public key manually uploaded to https://github.com/settings/keys
 
