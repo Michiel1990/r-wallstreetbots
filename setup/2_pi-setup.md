@@ -12,10 +12,7 @@ This document outlines the essential hardware and configuration requirements nee
     * Remote shell access is configured exclusively through the **SSH protocol**.
     * Authentication uses **SSH Key-Pairs** for enhanced security.
 
----
-
-## 3. GitHub Configuration
-
+## 3. GitHub access
 * **GitHub SSH Access:** Configured to allow secure, passwordless interaction with remote repositories.
-    * **MacBook:** An **encrypted SSH Key** is set up for local interaction and management.
+    * **MacBook:** An **encrypted SSH Key** is set up for local development and management. This allows me to use visual GUI tools when needed
     * **Raspberry Pi 5:** A dedicated **SSH Key** is configured for operations directly from the device.
