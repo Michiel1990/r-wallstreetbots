@@ -5,15 +5,15 @@ sudo apt install git
 git --version
 
 # create the repository folder
-cd home
+cd /home/michielsmulders
 sudo mkdir git-projects
 cd git-projects
 sudo mkdir r-wallstreetbots
 
 # Clone the root project folder (sudo is needed for writing files, the -E preserves the env which holds the SSH agent)
-cd /home/git-projects/r-wallstreetbots
+cd /home/michielsmulders/git-projects/r-wallstreetbots
 sudo -E git clone git@github.com:Michiel1990/r-wallstreetbots.git
-git config --global --add safe.directory /home/git-projects/r-wallstreetbots
+git config --global --add safe.directory /home/michielsmulders/git-projects/r-wallstreetbots
 
 # Create setup folder and its contents
 touch readme.md

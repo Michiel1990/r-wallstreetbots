@@ -1,2 +1,4 @@
 **/.DS_Store
 python-venv/
+airflow-venv/
+dbt-core-venv/
