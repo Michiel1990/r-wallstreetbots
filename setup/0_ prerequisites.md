@@ -12,6 +12,7 @@ This document outlines the essential hardware and configuration requirements nee
 * **Access:** **"Headless" Access via SSH**
     * Remote shell access is configured exclusively through the **SSH protocol**.
     * Authentication uses **SSH Key-Pairs** for enhanced security.
+    * This allows me to steer the pi from my Macbook (M1 Air)
 
 ## 3. GitHub 
 ### SSH access
