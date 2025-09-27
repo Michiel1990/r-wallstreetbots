@@ -2,7 +2,7 @@
 This document outlines the essential hardware and configuration requirements needed to start the Git project, focusing on a **Raspberry Pi 5** as the primary development environment accessed remotely.
 
 ## 1. Hardware
-* **Raspberry Pi 5:** The core computing device for the project.
+* **Raspberry Pi 5:** The core computing device for the project. It will be the server that runs our "bot".
 
 ## 2. Operating System & Access
 * **OS:** **Raspberry Pi OS Lite (64-bit)**
@@ -12,7 +12,21 @@ This document outlines the essential hardware and configuration requirements nee
     * Remote shell access is configured exclusively through the **SSH protocol**.
     * Authentication uses **SSH Key-Pairs** for enhanced security.
 
-## 3. GitHub access
-* **GitHub SSH Access:** Configured to allow secure, passwordless interaction with remote repositories.
-    * **MacBook:** An **encrypted SSH Key** is set up for local development and management. This allows me to use visual GUI tools when needed
-    * **Raspberry Pi 5:** A dedicated **SSH Key** is configured for operations directly from the device.
+## 3. GitHub 
+### SSH access
+* **Macbook M1 Air:** An **encrypted SSH Key** is set up for local development and management. This allows me to use visual GUI tools when needed
+* **Raspberry Pi 5:** A dedicated **SSH Key** is configured for operations directly from the device.
+```
+#generate keypair locally
+ssh-keygen -t ed25519 -C "my_email@icloud.com" -f ~/.ssh/my_key_name
+    # --> public key manually uploaded to https://github.com/settings/keys
+
+#test key
+ssh -i ~/.ssh/macbook_github_key -T git@github.com
+
+#add key to agent
+eval "$(ssh-agent -s)"
+ssh-add ~/.ssh/macbook_github_key
+```
+### Repo
+* a new repository was created manually from the Github web interface

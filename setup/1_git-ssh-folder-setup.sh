@@ -1,16 +1,3 @@
-#generate keypair locally
-ssh-keygen -t ed25519 -C "my_email@icloud.com" -f ~/.ssh/macbook_github_key
-
-#public key manually uploaded to https://github.com/settings/keys
-
-#test key
-ssh -i ~/.ssh/macbook_github_key -T git@github.com
-
-#add key to agent
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/macbook_github_key
-
-# new repo created on Github.com webinterface
 # Clone the root project folder
 cd /Users/akagi/Library/GitHub
 git clone git@github.com:Michiel1990/r-wallstreetbots.git
