@@ -23,4 +23,4 @@
 	6. Airflow PostgreSQL bash job for Postgress to export Silver layer (recent date) as CSV
 	7. Airflow File Sensor operator to look for CSV
 	8. Airflow AWSCLI bash command to upload to blob storage
-Trigger the BI tool to refresh the "portfolio" data to offer several insights into how it is going<img width="1320" height="1004" alt="image" src="https://github.com/user-attachments/assets/3eb9e192-b731-4b6d-9556-a0182a94fd7b" />
+	9. Trigger the BI tool to refresh the "portfolio" data to offer several insights into how it is going
