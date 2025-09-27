@@ -1,37 +1,46 @@
-# Clone the root project folder
-cd /Users/akagi/Library/GitHub
-git clone git@github.com:Michiel1990/r-wallstreetbots.git
+# install and verify git
+sudo apt update
+sudo apt upgrade
+sudo apt install git
+git --version
+
+# create the repository folder
+cd home
+sudo mkdir git-projects
+cd git-projects
+sudo mkdir r-wallstreetbots
+
+# Clone the root project folder (sudo is needed for writing files, the -E preserves the env which holds the SSH agent)
+cd /home/git-projects/r-wallstreetbots
+sudo -E git clone git@github.com:Michiel1990/r-wallstreetbots.git
 
 # Create setup folder and its contents
 touch readme.md
 touch .gitignore
-cd /Users/akagi/Library/GitHub/r-wallstreetbots
 mkdir setup
-touch setup/1_git-ssh-folder-setup.sh
-touch setup/2_pi-setup.md
-touch setup/3_pi-apt-packages.sh
+touch setup/1_pi-git-install.sh # PS the file eventually containing this code :-)
 
-# Create dags folder and DAG file
+# Create dags folder and empty DAG file
 mkdir dags
 touch dags/wallstreetbot.py
 
-# Create python folder and scripts
+# Create python folder and empty ETL script
 mkdir python
 touch python/ETL_stock_market_data.py
 
-# Create r folder and scripts
+# Create r folder and empty kmeans clustering script
 mkdir r
 touch r/kmeans_clustering.r
 
-# Create dbt folder (later to be filled with dbt init command)
+# Create dbt folder and empty config file
 mkdir -p dbt
 touch dbt/dbt_project.yml
 
-# Create bi folder and dashboard files
+# Create bi folder and empty file
 mkdir bi
 touch bi/dashboard_notes.md
 
-# Create docs folder and documentation files
+# Create docs folder and empty documentation files
 mkdir docs
 touch docs/architecture_diagram.png
 touch docs/ERD.dbml
