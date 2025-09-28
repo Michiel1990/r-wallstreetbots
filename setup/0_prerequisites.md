@@ -34,3 +34,15 @@ This document outlines the essential hardware and configuration requirements nee
    ```
 ### Repository
 * a new repository was created manually from the Github web interface
+
+## 4. File storage
+* later in the proces we will be exporting data as CSV files, to be uploaded to an Amazon S3 bucket, and finally consumed for any BI or analysis application.
+
+   >bash code for folder structure
+   ```bash
+   cd /home/michielsmulders
+   mkdir data
+   cd data
+   mkdir csv_exports
+   # final folder path /home/michielsmulders/data/csv_exports
+   ```
