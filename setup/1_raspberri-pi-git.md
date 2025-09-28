@@ -8,22 +8,20 @@ sudo apt upgrade
 sudo apt install git
 git --version
 
-# create the repository folder
+# create a folder for git repositories/projects
 cd /home/michielsmulders
 sudo mkdir git-projects
-cd git-projects
-sudo mkdir r-wallstreetbots
+cd /home/michielsmulders/git-projects
 
-# Clone the root project folder (sudo is needed for writing files, the -E preserves the env which holds the SSH agent)
+# Clone the root git project 
+git clone git@github.com:Michiel1990/r-wallstreetbots.git
 cd /home/michielsmulders/git-projects/r-wallstreetbots
-sudo -E git clone git@github.com:Michiel1990/r-wallstreetbots.git
-git config --global --add safe.directory /home/michielsmulders/git-projects/r-wallstreetbots
 
 # Create setup folder and its contents
 touch readme.md
 touch .gitignore
 mkdir setup
-touch setup/1_pi-git-install.sh # PS the file eventually containing this code :-)
+touch setup/1_raspberri-pi-git.md # PS the file eventually containing this code :-)
 
 # Create dags folder and empty DAG file
 mkdir dags
@@ -54,4 +52,13 @@ touch docs/ERD.dbml
 git add .
 git commit -m "Initial project structure for r/wallstreetbots project"
 git push
+```
+
+Depending on where/which folder you are cloning the repository to, you might need root user privileges to execute most git commands. You can fix this by preceding every git command with `sudo -E `
+- `sudo` executes as root user
+- `-E` preserves the venv which holds the SSH agent (the root user is not using the SSH keys)
+
+>Additionally the following was executed in a Bash Shell:
+```bash
+git config --global --add safe.directory /home/michielsmulders/git-projects/r-wallstreetbots
 ```
