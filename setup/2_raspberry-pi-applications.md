@@ -191,8 +191,8 @@ The basic installation can be done in the Terminal, no dedicated virtual environ
 # installation
 sudo apt install r-base
 
-# open R shell
-R
+# open R shell as root user
+sudo R
 ```
 An additional PostgreSQL connection package is needed
 >Run the following in the opened R shell
