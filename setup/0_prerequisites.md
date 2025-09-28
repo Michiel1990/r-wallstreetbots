@@ -76,6 +76,6 @@ We will basically be fetching 3 types of data
 
 For each python script that needs the key, a `.env` file is stored in the same directory.
 
-(Obviously all .env files will be included in `.gitignore`)
+(Obviously all `.env` files will be included in `.gitignore`)
 
 ## 7. AWS account
