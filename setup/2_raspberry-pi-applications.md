@@ -39,6 +39,10 @@ python3 -m venv /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv
 # activate the venv
 source /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/bin/activate
 
+# prerequisite packages
+sudo apt update
+sudo apt install gcc python3-dev libffi-dev libpq-dev build-essential
+
 # config where to store airflow config and metadata
 mkdir /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/airflow_home
 export AIRFLOW_HOME=/home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/airflow_home
