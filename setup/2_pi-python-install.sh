@@ -58,21 +58,24 @@ sudo apt install postgresql postgresql-contrib
     # start and enable the service
     sudo systemctl start postgresql
     sudo systemctl enable postgresql
-    # access postgres shell with postgresql user
+    # access postgres shell with postgresql role (authenticated through the system user)
     sudo -i -u postgres
     psql
     # create the raw database and loading user (for storing raw stock market data)
-    CREATE DATABASE RAW;
-    CREATE USER LOADER WITH ENCRYPTED PASSWORD '***';
-    GRANT ALL PRIVILEGES ON DATABASE RAW TO LOADER;
+    CREATE DATABASE raw;
+    CREATE USER loader WITH ENCRYPTED PASSWORD '***';
+    GRANT ALL PRIVILEGES ON DATABASE raw TO LOADER;
+    ALTER DATABASE raw OWNER TO loader;
     # create the PRD database and dbt development user
-    CREATE DATABASE DEV;
-    CREATE USER DBT_DEV WITH ENCRYPTED PASSWORD '***';
-    GRANT ALL PRIVILEGES ON DATABASE DEV TO DBT_DEV;
+    CREATE DATABASE dev;
+    CREATE USER dbt_dev WITH ENCRYPTED PASSWORD '***';
+    GRANT ALL PRIVILEGES ON DATABASE DEV TO dbt_dev;
+    ALTER DATABASE dev OWNER TO dbt_dev;
     # create the PRD database and dbt production user
-    CREATE DATABASE PRD;
-    CREATE USER DBT_PRD WITH ENCRYPTED PASSWORD '***';
-    GRANT ALL PRIVILEGES ON DATABASE PRD TO DBT_PRD;
+    CREATE DATABASE prd;
+    CREATE USER dbt_prd WITH ENCRYPTED PASSWORD '***';
+    GRANT ALL PRIVILEGES ON DATABASE prd TO dbt_prd;
+    ALTER DATABASE prd OWNER TO dbt_prd;
     # switch back to main user
     exit
     # make sure my Macbook can access the database over LAN
@@ -81,5 +84,13 @@ sudo apt install postgresql postgresql-contrib
         # host    all             all             <subnet_IP>            md5
     sudo nano /etc/postgresql/15/main/postgresql.conf
         #change the line to Listening = '*'
-    # to test from another device: psql -h 192.168.129.30 -U LOADER -d loader-ETL
+    # some usefull commands from withing the pgsql shell:
+        # check current user        SELECT current_user;
+        # check session user        SELECT session_user;
+        # list users and roles      \du
+        # list all databases        \l
+        # list all roles            SELECT * FROM pg_roles;
+        # reset passwords           ALTER USER postgres WITH PASSWORD 'your_new_password';
+        # exit pgsql shell          \q
+
 
