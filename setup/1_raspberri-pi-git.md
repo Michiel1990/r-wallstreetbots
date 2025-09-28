@@ -1,3 +1,5 @@
+# git 
+The following shows how to install, setup and configure git on the Raspberri Pi. Note we have already created an empty repository as well as enabled SSH access for the Pi in `0_prerequisites.md`.
 # install and verify git
 sudo apt update
 sudo apt upgrade
