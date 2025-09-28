@@ -189,4 +189,23 @@ R
 You can then test something simple like `2+2`
 
 <img width="510" height="326" alt="image" src="https://github.com/user-attachments/assets/19ef75f1-3bb9-4b55-9a79-44ef462060f4" />
+
+All the main functions should be installed in the standard installation:
+- `read.csv()`
+- `write.csv()`
+- `data.frame()`
+- `kmeans()`
+
 ## AWSCLI installation
+The basic installation can be done in the Terminal, no dedicated virtual environment is required.
+>Run the following commands in a Bash Shell:
+```bash
+# Install AWS CLI v2 (Latest Version)
+sudo apt install unzip curl
+curl "https://awscli.amazonaws.com/awscli-exe-linux-aarch64.zip" -o "awscliv2.zip"
+unzip awscliv2.zip
+sudo ./aws/install
+
+# check the installation
+/usr/local/bin/aws --version
+```
