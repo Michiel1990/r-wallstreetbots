@@ -46,3 +46,18 @@ This document outlines the essential hardware and configuration requirements nee
    mkdir csv_exports
    # final folder path /home/michielsmulders/data/csv_exports
    ```
+## 5. Updated locale
+* we want to avoid "locale" issues or warnings when installing PostgreSQL later on, therefore we configure it in advance
+
+   >bash code locale config
+   ```bash
+   sudo nano /etc/default/locale
+   # Make sure it contains:
+   # LANG="en_GB.UTF-8"
+   # LC_ALL="en_GB.UTF-8"
+   sudo locale-gen en_GB.UTF-8
+   sudo dpkg-reconfigure locales
+   # Select en_GB.UTF-8 UTF-8 in the list (spacebar to select).
+   source /etc/default/locale
+   sudo reboot
+   ```
