@@ -1,4 +1,4 @@
-# Git Project Prerequisites
+# Project Prerequisites
 This document outlines the essential hardware and configuration requirements needed to start the Git project, focusing on a **Raspberry Pi 5** as the primary development environment accessed remotely.
 
 ## 1. Hardware
@@ -35,7 +35,7 @@ This document outlines the essential hardware and configuration requirements nee
 ### Repository
 * a new repository was created manually from the Github web interface
 
-## 4. File storage
+## 4. Local File storage
 * later in the proces we will be exporting data as CSV files, to be uploaded to an Amazon S3 bucket, and finally consumed for any BI or analysis application.
 
    >bash code for folder structure
@@ -61,3 +61,10 @@ This document outlines the essential hardware and configuration requirements nee
    source /etc/default/locale
    sudo reboot
    ```
+
+## 6. Acces to Public Stock Market data
+https://www.alphavantage.co/support/#api-key
+
+https://www.alphavantage.co/documentation/
+
+## 7. AWS account
