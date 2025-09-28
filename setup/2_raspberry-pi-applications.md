@@ -146,7 +146,7 @@ sudo nano /etc/postgresql/15/main/pg_hba.conf
 
 # enable the PostgreSQL db to listen to incoming LAN connections
 sudo nano /etc/postgresql/15/main/postgresql.conf
-# --> change the line to Listening = '*'
+# --> change the line to "listen_addresses = '*'"
 ```
 
 #### PS1
