@@ -1,5 +1,7 @@
 # git 
 The following shows how to install, setup and configure git on the Raspberri Pi. Note we have already created an empty repository as well as enabled SSH access for the Pi in `0_prerequisites.md`.
+>Run the following commands in a Bash Shell:
+```bash
 # install and verify git
 sudo apt update
 sudo apt upgrade
@@ -52,3 +54,4 @@ touch docs/ERD.dbml
 git add .
 git commit -m "Initial project structure for r/wallstreetbots project"
 git push
+```
