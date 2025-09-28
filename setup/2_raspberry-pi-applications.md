@@ -176,6 +176,17 @@ ALTER USER postgres WITH PASSWORD 'your_new_password';
 # exit pgsql shell
 \q
 ```
+## R installation
+The basic installation can be done in the Terminal, no dedicated virtual environment is required.
+>Run the following commands in a Bash Shell:
+```bash
+# installation
+sudo apt install r-base
 
+# open R shell
+R
+```
+You can then test something simple like `2+2`
 
-
+<img width="510" height="326" alt="image" src="https://github.com/user-attachments/assets/19ef75f1-3bb9-4b55-9a79-44ef462060f4" />
+## AWSCLI installation
