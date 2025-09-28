@@ -35,9 +35,9 @@ touch python/ETL_stock_market_data.py
 mkdir r
 touch r/kmeans_clustering.r
 
-# Create dbt folder and empty config file
+# Create dbt folder and empty file
 mkdir -p dbt
-touch dbt/dbt_project.yml
+touch dbt/readme.md
 
 # Create bi folder and empty file
 mkdir bi
