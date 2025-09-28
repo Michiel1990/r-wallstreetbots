@@ -35,7 +35,7 @@ source /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/bin/acti
     --lastname Smulders \
     --role Admin \
     --email smulders.michiel@icloud.com \
-    --password airflow-web-UI
+    --password ***
     # to start the webserver and scheduler
     airflow webserver --port 8080
     airflow scheduler
@@ -52,3 +52,34 @@ source /home/michielsmulders/git-projects/r-wallstreetbots/dbt-core-venv/bin/act
     dbt init
     # deactivate the dbt venv
     deactivate
+
+# PostgreSQL
+sudo apt install postgresql postgresql-contrib
+    # start and enable the service
+    sudo systemctl start postgresql
+    sudo systemctl enable postgresql
+    # access postgres shell with postgresql user
+    sudo -i -u postgres
+    psql
+    # create the raw database and loading user (for storing raw stock market data)
+    CREATE DATABASE RAW;
+    CREATE USER LOADER WITH ENCRYPTED PASSWORD '***';
+    GRANT ALL PRIVILEGES ON DATABASE RAW TO LOADER;
+    # create the PRD database and dbt development user
+    CREATE DATABASE DEV;
+    CREATE USER DBT_DEV WITH ENCRYPTED PASSWORD '***';
+    GRANT ALL PRIVILEGES ON DATABASE DEV TO DBT_DEV;
+    # create the PRD database and dbt production user
+    CREATE DATABASE PRD;
+    CREATE USER DBT_PRD WITH ENCRYPTED PASSWORD '***';
+    GRANT ALL PRIVILEGES ON DATABASE PRD TO DBT_PRD;
+    # switch back to main user
+    exit
+    # make sure my Macbook can access the database over LAN
+    sudo nano /etc/postgresql/15/main/pg_hba.conf
+        # add the following line under IPv4 and save the file
+        # host    all             all             <subnet_IP>            md5
+    sudo nano /etc/postgresql/15/main/postgresql.conf
+        #change the line to Listening = '*'
+    # to test from another device: psql -h 192.168.129.30 -U LOADER -d loader-ETL
+
