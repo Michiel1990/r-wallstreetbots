@@ -24,5 +24,16 @@ https://code.visualstudio.com/docs/remote/ssh
 https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh
 
  --> used an older unencrypted ssh key pair as VS did not seem to promt me for the encryption...
+<img width="736" height="364" alt="image" src="https://github.com/user-attachments/assets/3b85298d-f540-4751-a62b-4e7a13a5591d" />
+
+<img width="1306" height="590" alt="image" src="https://github.com/user-attachments/assets/9855dc07-03b1-4872-9324-c715c8167b8c" />
+
+<img width="1256" height="250" alt="image" src="https://github.com/user-attachments/assets/60e8460d-197f-4d6a-becf-4c0b052b23b3" />
+
+<img width="2558" height="1446" alt="image" src="https://github.com/user-attachments/assets/2a12a7eb-459a-43df-ae4c-2f408979c0f1" />
+
+
+
+
 
 
