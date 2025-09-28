@@ -42,6 +42,7 @@ source /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/bin/acti
 # config where to store airflow config and metadata
 mkdir /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/airflow_home
 export AIRFLOW_HOME=/home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/airflow_home
+echo 'export AIRFLOW_HOME=/home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/airflow_home' >> /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/bin/activate
 
 # Install Airflow using constraints
 AIRFLOW_VERSION=2.8.1
