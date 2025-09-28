@@ -1,6 +1,6 @@
-# Applications required on the Raspberri Pi
+# Applications required on the Raspberry Pi
 ## Main Python installation
-Python usually comes pre-installed for Raspberri Pi OS, which is something we can double-check
+Python usually comes pre-installed for Raspberry Pi OS Lite (64 bit), which is something we can double-check
 >Run the following commands in a Bash Shell:
 ```bash
 python3 --version
@@ -128,7 +128,7 @@ show PORT;
 # switch back to Bash Shell
 exit
 ```
-Finally we want to enable remote access for other devices within the same LAN. As the Raspberri Pi itself does not have a desktop environment, being able to connect to the database through for example Dbeaver would speed up the execution and development of SQL code.
+Finally we want to enable remote access for other devices within the same LAN. As the Raspberry Pi itself does not have a desktop environment, being able to connect to the database through for example Dbeaver would speed up the execution and development of SQL code.
 >Run the following commands in a Bash Shell:
 ```bash
 # make sure another device can access the database over LAN
