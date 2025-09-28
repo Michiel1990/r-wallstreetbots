@@ -1,96 +1,185 @@
-# python usually comes pre-installed for Raspberri Pi OS
+# Configuring the Raspberri Pi OS
+## Main Python installation
+Python usually comes pre-installed for Raspberri Pi OS, which is something we can double-check
+>Run the following commands in a Bash Shell:
+```bash
 python3 --version
+```
+As a best practice we'll create virtual environments in our project folder for all further (python) installs
 
-# as a best practice we'll create virtual environments in our project folder for all further (python) installs 
-# !! make sure each is added to .gitignore !!
+**!! make sure each is added to .gitignore !!**
 
-# ETL/API
+## ETL/API installations
+>Run the following commands in a Bash Shell:
+```bash
+# create the dedicated general python virtual environment ("venv")
 python3 -m venv /home/michielsmulders/git-projects/r-wallstreetbots/python-venv
+
+# activate the venv
 source /home/michielsmulders/git-projects/r-wallstreetbots/python-venv/bin/activate
-    # for using dataframes, etc.
-    pip3 install pandas
-    # for connecting to APIs
-    pip3 install requests
-    # for connecting to a local postgreSQL database
-    pip3 install psycopg2-binary
-    # deactivate the python venv
-    deactivate
 
-# AIRFLOW
+#for using dataframes, etc.
+pip3 install pandas
+
+#for connecting to APIs
+pip3 install requests
+
+#for connecting to a local postgreSQL database
+pip3 install psycopg2-binary
+
+# deactivate the python venv
+deactivate
+```
+## Airflow installation
+>Run the following commands in a Bash Shell:
+```bash
+# create the dedicated Airflow virtual environment ("venv")
 python3 -m venv /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv
+
+# activate the venv
 source /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/bin/activate
-    # where to store airflow config and metadata
-    export AIRFLOW_HOME=~/airflow
-    # Install Airflow using constraints
-    AIRFLOW_VERSION=2.8.1
-    PYTHON_VERSION="$(python --version | cut -d " " -f 2 | cut -d "." -f 1,2)"
-    CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
-    pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
-    # init
-    airflow db init
-    # create admin user for the web UI
-    airflow users create \
-    --username admin \
-    --firstname Michiel \
-    --lastname Smulders \
-    --role Admin \
-    --email smulders.michiel@icloud.com \
-    --password ***
-    # to start the webserver and scheduler
-    airflow webserver --port 8080
-    airflow scheduler
-    # deactivate the airflow venv
-    deactivate
 
-# dbt core
+# config where to store airflow config and metadata
+export AIRFLOW_HOME=~/airflow
+
+# Install Airflow using constraints
+AIRFLOW_VERSION=2.8.1
+PYTHON_VERSION="$(python --version | cut -d " " -f 2 | cut -d "." -f 1,2)"
+CONSTRAINT_URL="https://raw.githubusercontent.com/apache/airflow/constraints-${AIRFLOW_VERSION}/constraints-${PYTHON_VERSION}.txt"
+pip install "apache-airflow==${AIRFLOW_VERSION}" --constraint "${CONSTRAINT_URL}"
+
+# initialize
+airflow db init
+
+# create admin user for the web UI
+airflow users create \
+--username admin \
+--firstname Michiel \
+--lastname Smulders \
+--role Admin \
+--email smulders.michiel@icloud.com \
+--password ***
+
+# deactivate the airflow venv
+deactivate
+```
+>Afterwards you can start the webserver and/or scheduler in a Bash Shell:
+```bash
+airflow webserver --port 8080
+airflow scheduler
+```
+
+## dbt core installation
+>Run the following commands in a Bash Shell:
+```bash
+# create the dedicated dbt core virtual environment ("venv")
 python3 -m venv /home/michielsmulders/git-projects/r-wallstreetbots/dbt-core-venv
-source /home/michielsmulders/git-projects/r-wallstreetbots/dbt-core-venv/bin/activate
-    # install both dbt-core and the PostgreSQL adapter
-    python -m pip install dbt-core dbt-postgres
-    # move to the required dbt folder (where we will store all models) and init
-    cd /home/michielsmulders/git-projects/r-wallstreetbots/dbt
-    dbt init
-    # deactivate the dbt venv
-    deactivate
 
-# PostgreSQL
+# activate the venv
+source /home/michielsmulders/git-projects/r-wallstreetbots/dbt-core-venv/bin/activate
+
+# install both dbt-core and the PostgreSQL adapter
+python -m pip install dbt-core dbt-postgres
+
+# move to the required dbt folder (where we will store all models) and initiliaze a project
+cd /home/michielsmulders/git-projects/r-wallstreetbots/dbt
+dbt init
+
+# deactivate the dbt venv
+deactivate
+```
+
+## PostgreSQL installation
+The basic installation can be done in the Terminal, no dedicated virtual environment is required.
+>Run the following commands in a Bash Shell:
+```bash
+# install PostgreSQL
 sudo apt install postgresql postgresql-contrib
-    # start and enable the service
-    sudo systemctl start postgresql
-    sudo systemctl enable postgresql
-    # access postgres shell with postgresql role (authenticated through the system user)
-    sudo -i -u postgres
-    psql
-    # create the raw database and loading user (for storing raw stock market data)
-    CREATE DATABASE raw;
-    CREATE USER loader WITH ENCRYPTED PASSWORD '***';
-    GRANT ALL PRIVILEGES ON DATABASE raw TO LOADER;
-    ALTER DATABASE raw OWNER TO loader;
-    # create the PRD database and dbt development user
-    CREATE DATABASE dev;
-    CREATE USER dbt_dev WITH ENCRYPTED PASSWORD '***';
-    GRANT ALL PRIVILEGES ON DATABASE DEV TO dbt_dev;
-    ALTER DATABASE dev OWNER TO dbt_dev;
-    # create the PRD database and dbt production user
-    CREATE DATABASE prd;
-    CREATE USER dbt_prd WITH ENCRYPTED PASSWORD '***';
-    GRANT ALL PRIVILEGES ON DATABASE prd TO dbt_prd;
-    ALTER DATABASE prd OWNER TO dbt_prd;
-    # switch back to main user
-    exit
-    # make sure my Macbook can access the database over LAN
-    sudo nano /etc/postgresql/15/main/pg_hba.conf
-        # add the following line under IPv4 and save the file
-        # host    all             all             <subnet_IP>            md5
-    sudo nano /etc/postgresql/15/main/postgresql.conf
-        #change the line to Listening = '*'
-    # some usefull commands from withing the pgsql shell:
-        # check current user        SELECT current_user;
-        # check session user        SELECT session_user;
-        # list users and roles      \du
-        # list all databases        \l
-        # list all roles            SELECT * FROM pg_roles;
-        # reset passwords           ALTER USER postgres WITH PASSWORD 'your_new_password';
-        # exit pgsql shell          \q
+
+# start and enable the service
+sudo systemctl start postgresql
+sudo systemctl enable postgresql
+
+# access postgres shell with postgresql role (authenticated through the system user)
+sudo -i -u postgres
+psql
+```
+
+Afterwards we need to configure the PostgreSQL database itself
+>Run the following commands in the psql Shell:
+```sql
+# create the raw database and loading user (for storing raw stock market data)
+CREATE DATABASE raw;
+CREATE USER loader WITH ENCRYPTED PASSWORD '***';
+GRANT ALL PRIVILEGES ON DATABASE raw TO LOADER;
+ALTER DATABASE raw OWNER TO loader;
+
+# create the DEV database and dbt development user
+CREATE DATABASE dev;
+CREATE USER dbt_dev WITH ENCRYPTED PASSWORD '***';
+GRANT ALL PRIVILEGES ON DATABASE DEV TO dbt_dev;
+ALTER DATABASE dev OWNER TO dbt_dev;
+
+# create the PRD database and dbt production user
+CREATE DATABASE prd;
+CREATE USER dbt_prd WITH ENCRYPTED PASSWORD '***';
+GRANT ALL PRIVILEGES ON DATABASE prd TO dbt_prd;
+ALTER DATABASE prd OWNER TO dbt_prd;
+
+# check the port (to be used later for remote access)
+show PORT;
+
+# switch back to Bash Shell
+exit
+```
+Finally we want to enable remote access for other devices within the same LAN. As the Raspberri Pi itself does not have a desktop environment, being able to connect to the database through for example Dbeaver would speed up the execution and development of SQL code.
+>Run the following commands in a Bash Shell:
+```bash
+# make sure another device can access the database over LAN
+sudo nano /etc/postgresql/15/main/pg_hba.conf
+# --> add the following line under IPv4 and save the file
+# host    all             all             <you_subnet_IP>            md5
+
+# enable the PostgreSQL db to listen to incoming LAN connections
+sudo nano /etc/postgresql/15/main/postgresql.conf
+# --> change the line to Listening = '*'
+```
+
+#### PS1
+Here some screenshots to show how you would connect to the database using Dbeaver (with JDBC driver installed), as well as the SSH keys defined earlier.
+
+<img width="803" height="507" alt="Screenshot 2025-09-28 at 11 11 49" src="https://github.com/user-attachments/assets/510282f8-db30-4504-876b-a8bc9af5ba16" />
+
+<img width="1045" height="699" alt="Screenshot 2025-09-28 at 11 09 11" src="https://github.com/user-attachments/assets/5a246cae-f1ea-42d5-b1e6-3a7341fb3e42" />
+
+<img width="1042" height="702" alt="Screenshot 2025-09-28 at 11 04 52" src="https://github.com/user-attachments/assets/6d2420cd-cb85-4d42-93b1-5ad2dd2cc88c" />
+
+<img width="357" height="187" alt="image" src="https://github.com/user-attachments/assets/bd336bc3-fbb2-418a-b7ee-b68eaddb6ef6" />
+
+#### PS2
+Included here are some usefull commands to be executed within a psql shell:
+```sql
+# check current user
+SELECT current_user;
+
+# check session user
+SELECT session_user;
+
+# list users and roles
+\du
+
+# list all databases
+\l
+
+# list all roles
+SELECT * FROM pg_roles;
+
+# reset passwords
+ALTER USER postgres WITH PASSWORD 'your_new_password';
+
+# exit pgsql shell
+\q
+```
+
 
 
