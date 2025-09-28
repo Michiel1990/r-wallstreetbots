@@ -19,4 +19,10 @@ dbt debug
 
 deactivate
 
+### remote VS code access
+https://code.visualstudio.com/docs/remote/ssh
+https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh
+
+ --> used an older unencrypted ssh key pair as VS did not seem to promt me for the encryption...
+
 
