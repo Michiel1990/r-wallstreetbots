@@ -81,10 +81,6 @@ source /home/michielsmulders/git-projects/r-wallstreetbots/dbt-core-venv/bin/act
 # install both dbt-core and the PostgreSQL adapter
 python -m pip install dbt-core dbt-postgres
 
-# move to the required dbt folder (where we will store all models) and initiliaze a project
-cd /home/michielsmulders/git-projects/r-wallstreetbots/dbt
-dbt init
-
 # deactivate the dbt venv
 deactivate
 ```
