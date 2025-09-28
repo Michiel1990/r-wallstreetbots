@@ -1,5 +1,5 @@
-# Raspberri Pi 5 git installation
-The following shows how to install, setup and configure git on the Raspberri Pi. Note we have already created an empty repository as well as enabled SSH access for the Pi in `0_prerequisites.md`.
+# Raspberry Pi 5 git installation
+The following shows how to install, setup and configure git on the Raspberry Pi. Note we have already created an empty repository as well as enabled SSH access for the Pi in `0_prerequisites.md`.
 >Run the following commands in a Bash Shell:
 ```bash
 # install and verify git
@@ -21,7 +21,7 @@ cd /home/michielsmulders/git-projects/r-wallstreetbots
 touch readme.md
 touch .gitignore
 mkdir setup
-touch setup/1_raspberri-pi-git.md # PS the file eventually containing this code :-)
+touch setup/1_raspberry-pi-git.md # PS the file eventually containing this code :-)
 
 # Create dags folder and empty DAG file
 mkdir dags
