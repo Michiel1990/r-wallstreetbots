@@ -18,17 +18,19 @@ This document outlines the essential hardware and configuration requirements nee
 ### SSH access
 * **Macbook M1 Air:** An **encrypted SSH Key** is set up for local development and management. This allows me to use visual GUI tools when needed
 * **Raspberry Pi 5:** A dedicated **SSH Key** is configured for operations directly from the device.
-```
-#generate keypair locally
-ssh-keygen -t ed25519 -C "my_email@icloud.com" -f ~/.ssh/my_key_name
-    # --> public key manually uploaded to https://github.com/settings/keys
 
-#test key
-ssh -i ~/.ssh/my_key_name -T git@github.com
-
-#add key to agent
-eval "$(ssh-agent -s)"
-ssh-add ~/.ssh/my_key_name
-```
-### Repo
+   >bash code for generating and using the SSH key pair:
+   ```bash
+   #generate keypair locally
+   ssh-keygen -t ed25519 -C "my_email@icloud.com" -f ~/.ssh/my_key_name
+       # --> public key manually uploaded to https://github.com/settings/keys
+   
+   #test key
+   ssh -i ~/.ssh/my_key_name -T git@github.com
+   
+   #add key to agent
+   eval "$(ssh-agent -s)"
+   ssh-add ~/.ssh/my_key_name
+   ```
+### Repository
 * a new repository was created manually from the Github web interface
