@@ -66,16 +66,20 @@ This document outlines the essential hardware and configuration requirements nee
 A free API key to the AlphaVantage database has been requested here:
 https://www.alphavantage.co/support/#api-key
 
-Documentation on how to use the API here:
-https://www.alphavantage.co/documentation/
+This free key is limited to 25 requests per day. The main drawback is that there is no bulk-fetching of data (of example all companies on the Nasdaq), but it has to be requested ticker per ticker.
+
+It does however allow fetching historical timeseries data of that one ticker in one request.
 
 We will basically be fetching 3 types of data
 - a list of available ticker symbols (eg Apple Inc. = `AAPL`)
-- for a selection of tickers we fetch general company data
-- for a selection of tickers we fetch eod stock performance
+- for a selection of tickers we fetch generic company data
+- for a selection of tickers we fetch historical eod stock performance
 
 For each python script that needs the key, a `.env` file is stored in the same directory.
 
 (Obviously all `.env` files will be included in `.gitignore`)
+
+Documentation on how to use the API here:
+https://www.alphavantage.co/documentation/
 
 ## 7. AWS account
