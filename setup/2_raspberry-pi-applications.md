@@ -40,7 +40,8 @@ python3 -m venv /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv
 source /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/bin/activate
 
 # config where to store airflow config and metadata
-export AIRFLOW_HOME=~/airflow
+mkdir /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/airflow_home
+export AIRFLOW_HOME=/home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/airflow_home
 
 # Install Airflow using constraints
 AIRFLOW_VERSION=2.8.1
