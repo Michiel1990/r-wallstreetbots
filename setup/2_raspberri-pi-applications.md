@@ -1,4 +1,4 @@
-# Application required on the Raspberri Pi
+# Applications required on the Raspberri Pi
 ## Main Python installation
 Python usually comes pre-installed for Raspberri Pi OS, which is something we can double-check
 >Run the following commands in a Bash Shell:
