@@ -194,15 +194,24 @@ sudo apt install r-base
 # open R shell
 R
 ```
-You can then test something simple like `2+2`
+An additional PostgreSQL connection package is needed
+>Run the following in the opened R shell
+```R
+# install RPostgres
+install.packages("RPostgres")
+```
+You can also then test something simple like `2+2`
 
 <img width="510" height="326" alt="image" src="https://github.com/user-attachments/assets/19ef75f1-3bb9-4b55-9a79-44ef462060f4" />
 
-All the main functions should be installed in the standard installation:
+All the main functions should be installed now:
 - `read.csv()`
 - `write.csv()`
 - `data.frame()`
 - `kmeans()`
+- `dbConnect()`
+- `dbGetQuery()`
+- `...`
 
 ## AWSCLI installation
 The basic installation can be done in the Terminal, no dedicated virtual environment is required.
