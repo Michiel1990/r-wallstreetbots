@@ -200,9 +200,14 @@ An additional PostgreSQL connection package is needed
 # install RPostgres
 install.packages("RPostgres")
 ```
-You can also then test something simple like `2+2`
+Eventually the PostgreSQL db would be accessed as follows:
+```R
+library(DBI)
+con <- dbConnect(RPostgres::Postgres(), dbname="raw", host="localhost", port=5432, user="loader", password="***")
+df <- dbGetQuery(con, "SELECT * FROM public.access_test_dummy;")
+```
+<img width="1552" height="262" alt="image" src="https://github.com/user-attachments/assets/aabb51fc-670c-4131-9e2c-4f3917a2dfa8" />
 
-<img width="510" height="326" alt="image" src="https://github.com/user-attachments/assets/19ef75f1-3bb9-4b55-9a79-44ef462060f4" />
 
 All the main functions should be installed now:
 - `read.csv()`
