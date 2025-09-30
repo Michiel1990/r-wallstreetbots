@@ -12,19 +12,20 @@ As a best practice we'll create virtual environments in our project folder for a
 ## ETL/API installations
 Packages needed:
 - for fetching environment variables (such as api keys) from a .env file:
-  - `from dotenv import load_dotenv`
-  - `import os`
+  - `dotenv`/`load_dotenv`
+  - `os`
 - for making the API requests:
-  - `import requests`
+  - `requests`
 - for storing tabular/CSV data in dataframes
-  - `import pandas as pd`
-  - `from io import StringIO`
+  - `pandas`
+  - `io`/`StringIO`
 - for outputting dataframes as csv in a folder location of choice:
-  - `import csv`
-  - `from pathlib import Path`
-  - `from datetime import date`
+  - `csv`
+  - `pathlib`/`Path`
+  - `datetime`/`date`
 - for connection engines to PostgreSQL
-  - `from sqlalchemy import create_engine`
+  - `psycopg2-binary`
+  - `sqlalchemy`/`create_engine`
 
 >Run the following commands in a Bash Shell:
 ```bash
@@ -34,14 +35,17 @@ python3 -m venv /home/michielsmulders/git-projects/r-wallstreetbots/python-venv
 # activate the venv
 source /home/michielsmulders/git-projects/r-wallstreetbots/python-venv/bin/activate
 
-#for using dataframes, etc.
-pip3 install pandas
-
-#for connecting to APIs
+# installe listed packages
+pip3 install dotenv
+pip3 install os
 pip3 install requests
-
-#for connecting to a local postgreSQL database
+pip3 install pandas
+pip3 install io
+pip3 install csv
+pip3 install pathlib
+pip3 install datetime
 pip3 install psycopg2-binary
+pip3 install sqlalchemy
 
 # deactivate the python venv
 deactivate
