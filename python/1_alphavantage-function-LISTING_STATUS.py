@@ -43,6 +43,9 @@ df.to_csv(out_path_file
             ,index=False
             ,encoding='utf-8')
 
+# return status to airflow
+print(f"Written {len(df)} rows into '{out_path_file}' successfully.")
+
 # define the connection to the PostgreSQL database
 username = "loader"
 password = POSTGRESQL_LOADER_PWD
@@ -73,4 +76,4 @@ df.to_sql(table_name
             ,chunksize=1000)
 
 # return succesfull run results to airflow
-print(f"Inserted {len(df)} rows into '{table_name}' successfully.")
+print(f"Inserted {len(df)} rows into PostgreSQL table '{table_name}' successfully.")

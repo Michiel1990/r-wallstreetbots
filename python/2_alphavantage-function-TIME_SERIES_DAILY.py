@@ -8,6 +8,7 @@ from pathlib import Path
 from datetime import date
 from sqlalchemy import create_engine, text
 
+
 # read the .env file to fetch the secrets
 load_dotenv()
 API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
@@ -41,7 +42,7 @@ out_path = Path("/Users/akagi/Downloads")
 schema_name = 'alphavantage'
 table_name = "time_series_daily"
 
-# execute the GET request with a loop over the tickets
+# execute the GET request for every ticker in the list
 for ticker in tickers:
     params = {
         "function": "TIME_SERIES_DAILY",
@@ -69,6 +70,9 @@ for ticker in tickers:
                 ,header=True
                 ,index=False
                 ,encoding='utf-8')
+    
+    # return status to airflow
+    print(f"Written {len(df)} rows into '{out_path_file}' successfully.")
 
     # make sure the data of today has not been loaded before
     query = text("delete from raw.alphavantage.time_series_daily where dt = :query_dt and ticker = :query_ticker")
@@ -87,4 +91,4 @@ for ticker in tickers:
               ,chunksize=1000)
 
     # return succesfull run results to airflow
-    print(f"Inserted {len(df)} rows into '{table_name}' for ticker '{ticker}' successfully.")
+    print(f"Inserted {len(df)} rows into PostgreSQL table '{table_name}' for ticker '{ticker}' successfully.")
