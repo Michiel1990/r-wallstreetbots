@@ -15,7 +15,7 @@ from pathlib import Path
 from datetime import date
 
 # for writing content of the dataframe to PostgreSQL
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 
 try:
@@ -45,7 +45,7 @@ try:
     # add dt column
     df['dt'] = today_str
     
-    # write the data as a csv file to the file path
+    # write the df data as a csv file to the file path
     df.to_csv(out_path_file
                 ,quoting=csv.QUOTE_ALL
                 ,sep=','
@@ -61,10 +61,19 @@ try:
     db_name = "raw"
     schema_name = 'alphavantage'
     table_name = "listing_status"
+
+    # create the SQLalchemy engine
     connection_string = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{db_name}"
-    
-    # write the (same) data to a PostgreSQL database
     engine = create_engine(connection_string)
+
+    # make sure the data of today has not been loaded before
+    query = text("delete from raw.alphavantage.listing_status where dt = :query_dt")
+    with engine.connect() as conn:
+        conn.execute(query, {"query_dt": today_str})
+        conn.commit()
+        conn.close()
+    
+    # write the df data to a PostgreSQL database
     df.to_sql(table_name
               ,engine
               ,schema = schema_name
