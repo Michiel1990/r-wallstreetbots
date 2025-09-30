@@ -1,4 +1,4 @@
-# Raspberry Pi 5 git installation
+# Raspberry Pi 5 git & folder structure
 The following shows how to install, setup and configure git on the Raspberry Pi. Note we have already created an empty repository as well as enabled SSH access for the Pi (`README.md`).
 
 ### git installation
