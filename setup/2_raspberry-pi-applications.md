@@ -24,7 +24,7 @@ Packages needed that are not standard python Library:
   - `psycopg2-binary`
   - `sqlalchemy`/`create_engine`
  
-FYI we'll also be using standard python library such as `os`, `io` and `csv`
+FYI we'll also be using standard python library such as `os`, `io` and `csv`.
 
 >Run the following commands in a Bash Shell:
 ```bash
