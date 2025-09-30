@@ -126,7 +126,7 @@ sudo -i -u postgres
 psql
 ```
 
-Afterwards we need to configure the PostgreSQL database itself
+#### PostgreSQL database configuration
 >Run the following commands in the psql Shell:
 ```sql
 # create the raw database and loading user (for storing raw stock market data)
