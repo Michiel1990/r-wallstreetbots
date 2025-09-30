@@ -95,6 +95,23 @@ deactivate
 
 ## PostgreSQL installation
 The basic installation can be done in the Terminal, no dedicated virtual environment is required.
+
+#### Updated locale
+For some reason we get "locale" issues or warnings when installing PostgreSQL later on, therefore we configure it in advance
+>Run the following commands in a Bash Shell:
+```bash
+sudo nano /etc/default/locale
+# Make sure it contains:
+# LANG="en_GB.UTF-8"
+# LC_ALL="en_GB.UTF-8"
+sudo locale-gen en_GB.UTF-8
+sudo dpkg-reconfigure locales
+# Select en_GB.UTF-8 UTF-8 in the list (spacebar to select).
+source /etc/default/locale
+sudo reboot
+```
+
+#### Main installation
 >Run the following commands in a Bash Shell:
 ```bash
 # install PostgreSQL

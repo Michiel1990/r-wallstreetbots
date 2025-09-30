@@ -49,36 +49,6 @@ The following outlines the essential hardware and configuration requirements nee
 ## 1. Hardware
 * **Raspberry Pi 5:** The core computing device for the project. It will be the server that runs our "bot".
 * Henceforth always aliased as "**pi**" in filenames, code, etc.
-#### Local File storage
-* later in the proces we will be exporting data as CSV files, to be uploaded to an Amazon S3 bucket, and finally consumed for any BI or analysis application.
-
-   >bash code for folder structure
-   ```bash
-   cd /home/michielsmulders
-   mkdir data
-   cd data
-   mkdir csv_exports
-   cd csv_exports
-   mkdir listing_status
-   mkdir time_series_daily
-   mkdir balance_sheet
-   # final folder path eg: /home/michielsmulders/data/csv_exports/listing_status
-   ```
-#### Updated locale
-* we want to avoid "locale" issues or warnings when installing PostgreSQL later on, therefore we configure it in advance
-
-   >bash code locale config
-   ```bash
-   sudo nano /etc/default/locale
-   # Make sure it contains:
-   # LANG="en_GB.UTF-8"
-   # LC_ALL="en_GB.UTF-8"
-   sudo locale-gen en_GB.UTF-8
-   sudo dpkg-reconfigure locales
-   # Select en_GB.UTF-8 UTF-8 in the list (spacebar to select).
-   source /etc/default/locale
-   sudo reboot
-   ```
 
 ## 2. Operating System & Access
 * **OS:** **Raspberry Pi OS Lite (64-bit)**
