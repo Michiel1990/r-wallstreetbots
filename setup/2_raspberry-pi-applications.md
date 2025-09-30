@@ -136,7 +136,8 @@ sudo apt install postgresql postgresql-contrib
 # start and enable the service
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
-sudo systemctl status postgresql
+#sudo systemctl status postgresql
+#sudo systemctl restart postgresql
 
 # access postgres shell with postgresql role (authenticated through the system user)
 sudo -i -u postgres
@@ -177,6 +178,7 @@ Finally we want to enable remote access for other devices within the same LAN. A
 sudo nano /etc/postgresql/15/main/pg_hba.conf
 # --> add the following line under IPv4 and save the file
 # host    all             all             <you_subnet_IP>            md5
+# make sure the IP end with eg /32!
 
 # enable the PostgreSQL db to listen to incoming LAN connections
 sudo nano /etc/postgresql/15/main/postgresql.conf
