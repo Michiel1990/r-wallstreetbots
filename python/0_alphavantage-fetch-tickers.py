@@ -1,40 +1,76 @@
 # for fetching the API key from a .env file:
 from dotenv import load_dotenv
 import os
+
 # for making the API request:
 import requests
+
 # for storing the response (raw csv) in pandas dataframe:
 import pandas as pd
 from io import StringIO
+
 # for writing content of the dataframe (as clean csv) to a path of choice:
 import csv
 from pathlib import Path
+from datetime import date
 
-# read the .env file to fetch the AlphaVantage API Key
-load_dotenv()
-API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
+# for writing content of the dataframe to PostgreSQL
+from sqlalchemy import create_engine
 
-# define the basic parameters of our GET request
-BASE_URL = "https://www.alphavantage.co/query"
-params = {
-    "function": "LISTING_STATUS",
-    "apikey": API_KEY
-}
 
-# execute the GET request
-resp = requests.get(BASE_URL, params=params, timeout=30)
+try:
 
-# store the response (csv format) as a dataframe
-df = pd.read_csv(StringIO(resp.text))
+    # read the .env file to fetch the AlphaVantage API Key
+    load_dotenv()
+    API_KEY = os.getenv("ALPHAVANTAGE_API_KEY")
+    
+    # define the basic parameters of our GET request
+    BASE_URL = "https://www.alphavantage.co/query"
+    params = {
+        "function": "LISTING_STATUS",
+        "apikey": API_KEY
+    }
+    
+    # execute the GET request
+    resp = requests.get(BASE_URL, params=params, timeout=30)
+    
+    # store the response (csv format) as a dataframe
+    df = pd.read_csv(StringIO(resp.text))
+    
+    # define the path for the final output
+    today_str = date.today().isoformat()
+    out_path = Path("/home/michielsmulders/data/csv_exports/listing_status")
+    out_path_file = out_path / f"{today_str}.csv"
+    
+    # write the data as a clean csv file to the file path
+    df.to_csv(out_path_file
+                ,quoting=csv.QUOTE_ALL
+                ,sep=','
+                ,header=True
+                ,index=False
+                ,encoding='utf-8')
+    
+    # define the connection to the PostgreSQL database
+    username = "loader"
+    password = os.getenv("POSTGRESQL_LOADER_PWD")
+    host = "localhost"
+    port = "5432"
+    db_name = "raw"
+    table_name = "listing_status"
+    connection_string = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{db_name}"
+    
+    # write the (same) data to a PostgreSQL database
+    engine = create_engine(connection_string)
+    df.to_sql(table_name
+              ,engine
+              ,if_exists="append"
+              ,index=False
+              ,method="multi"
+              ,chunksize=1000)
 
-# define the path for the final output
-out_path = Path("/Users/akagi/Downloads/")
-out_path_file = out_path / 'alphavantage_tickers.csv'
+    # return succesfull run results to airflow
+    print(f"Inserted {len(df)} rows into '{table_name}' successfully.")
 
-# write the data as a clean csv file to the file path
-df.to_csv(out_path_file
-            ,quoting=csv.QUOTE_ALL
-            ,sep=','
-            ,header=True
-            ,index=False
-            ,encoding='utf-8')
+except Exception as e:
+    print(f"Error occurred: {e}")
+    raise  # Airflow will mark the task as failed
