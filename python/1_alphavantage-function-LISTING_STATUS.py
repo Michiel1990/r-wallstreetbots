@@ -32,7 +32,7 @@ try:
     }
     
     # execute the GET request
-    resp = requests.get(BASE_URL, params=params, timeout=30)
+    resp = requests.get(BASE_URL, params=params, timeout=120)
     
     # store the response (csv format) as a dataframe
     df = pd.read_csv(StringIO(resp.text))
@@ -42,7 +42,7 @@ try:
     out_path = Path("/home/michielsmulders/data/csv_exports/listing_status")
     out_path_file = out_path / f"{today_str}.csv"
     
-    # write the data as a clean csv file to the file path
+    # write the data as a csv file to the file path
     df.to_csv(out_path_file
                 ,quoting=csv.QUOTE_ALL
                 ,sep=','
