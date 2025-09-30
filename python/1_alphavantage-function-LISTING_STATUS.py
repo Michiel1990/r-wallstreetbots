@@ -1,20 +1,11 @@
-# for fetching the API key from a .env file:
 from dotenv import load_dotenv
 import os
-
-# for making the API request:
 import requests
-
-# for storing the response (raw csv) in pandas dataframe:
 import pandas as pd
 from io import StringIO
-
-# for writing content of the dataframe (as clean csv) to a path of choice:
 import csv
 from pathlib import Path
 from datetime import date
-
-# for writing content of the dataframe to PostgreSQL
 from sqlalchemy import create_engine, text
 
 
@@ -62,7 +53,7 @@ try:
     schema_name = 'alphavantage'
     table_name = "listing_status"
 
-    # create the SQLalchemy engine
+    # create the SQLalchemy - PostgreSQL engine
     connection_string = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{db_name}"
     engine = create_engine(connection_string)
 
