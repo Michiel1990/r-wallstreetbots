@@ -136,7 +136,8 @@ sudo apt install postgresql postgresql-contrib
 # start and enable the service
 sudo systemctl start postgresql
 sudo systemctl enable postgresql
-sudo systemctl status postgresql
+#sudo systemctl status postgresql
+#sudo systemctl restart postgresql
 
 # access postgres shell with postgresql role (authenticated through the system user)
 sudo -i -u postgres
