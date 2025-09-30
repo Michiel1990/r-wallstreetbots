@@ -50,6 +50,9 @@ try:
                 ,index=False
                 ,encoding='utf-8')
     
+    # add dt column
+    df['dt'] = today_str
+    
     # define the connection to the PostgreSQL database
     username = "loader"
     password = os.getenv("POSTGRESQL_LOADER_PWD")
