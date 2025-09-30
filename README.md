@@ -58,7 +58,11 @@ The following outlines the essential hardware and configuration requirements nee
    mkdir data
    cd data
    mkdir csv_exports
-   # final folder path /home/michielsmulders/data/csv_exports
+   cd csv_exports
+   mkdir listing_status
+   mkdir time_series_daily
+   mkdir balance_sheet
+   # final folder path eg: /home/michielsmulders/data/csv_exports/listing_status
    ```
 #### Updated locale
 * we want to avoid "locale" issues or warnings when installing PostgreSQL later on, therefore we configure it in advance
