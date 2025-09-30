@@ -12,22 +12,20 @@ As a best practice we'll create virtual environments in our project folder for a
 ## ETL/API installations
 Packages needed:
 - for fetching environment variables (such as api keys) from a .env file:
-`from dotenv import load_dotenv`
-`import os`
-- for making the API request:
-import requests
+  - `from dotenv import load_dotenv`
+  - `import os`
+- for making the API requests:
+  - `import requests`
+- for storing tabular/CSV data in dataframes
+  - `import pandas as pd`
+  - `from io import StringIO`
+- for outputting dataframes as csv in a folder location of choice:
+  - `import csv`
+  - `from pathlib import Path`
+  - `from datetime import date`
+- for connection engines to PostgreSQL
+  - `from sqlalchemy import create_engine`
 
-# for storing the response (raw csv) in pandas dataframe:
-import pandas as pd
-from io import StringIO
-
-# for writing content of the dataframe (as clean csv) to a path of choice:
-import csv
-from pathlib import Path
-from datetime import date
-
-# for writing content of the dataframe to PostgreSQL
-from sqlalchemy import create_engine
 >Run the following commands in a Bash Shell:
 ```bash
 # create the dedicated general python virtual environment ("venv")
