@@ -56,6 +56,7 @@ try:
     host = "localhost"
     port = "5432"
     db_name = "raw"
+    schema_name = 'alphavantage'
     table_name = "listing_status"
     connection_string = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{db_name}"
     
@@ -63,6 +64,7 @@ try:
     engine = create_engine(connection_string)
     df.to_sql(table_name
               ,engine
+              ,schema = schema_name
               ,if_exists="append"
               ,index=False
               ,method="multi"
