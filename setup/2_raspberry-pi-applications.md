@@ -177,6 +177,7 @@ Finally we want to enable remote access for other devices within the same LAN. A
 sudo nano /etc/postgresql/15/main/pg_hba.conf
 # --> add the following line under IPv4 and save the file
 # host    all             all             <you_subnet_IP>            md5
+# make sure the IP end with eg /32!
 
 # enable the PostgreSQL db to listen to incoming LAN connections
 sudo nano /etc/postgresql/15/main/postgresql.conf
