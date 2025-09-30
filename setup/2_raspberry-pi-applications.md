@@ -165,6 +165,25 @@ CREATE USER dbt_prd WITH ENCRYPTED PASSWORD '***';
 GRANT ALL PRIVILEGES ON DATABASE prd TO dbt_prd;
 ALTER DATABASE prd OWNER TO dbt_prd;
 
+# Switch to the loader role and create schema in raw
+SET ROLE loader;
+\c raw
+CREATE SCHEMA alphavatage;
+
+# Switch to the dbt_dev role and create schemas in dev
+SET ROLE dbt_dev;
+\c dev
+CREATE SCHEMA bronze;
+CREATE SCHEMA silver;
+CREATE SCHEMA gold;
+
+# Switch to the dbt_prd role and create schemas in prd
+SET ROLE dbt_prd;
+\c prd
+CREATE SCHEMA bronze;
+CREATE SCHEMA silver;
+CREATE SCHEMA gold;
+
 # check the port (to be used later for remote access)
 show PORT;
 
