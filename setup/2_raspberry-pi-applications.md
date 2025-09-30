@@ -10,22 +10,21 @@ As a best practice we'll create virtual environments in our project folder for a
 **!! make sure each is added to .gitignore !!**
 
 ## ETL/API installations
-Packages needed:
+Packages needed that are not standard python Library:
 - for fetching environment variables (such as api keys) from a .env file:
   - `dotenv`/`load_dotenv`
-  - `os`
 - for making the API requests:
   - `requests`
 - for storing tabular/CSV data in dataframes
   - `pandas`
-  - `io`/`StringIO`
 - for outputting dataframes as csv in a folder location of choice:
-  - `csv`
   - `pathlib`/`Path`
   - `datetime`/`date`
 - for connection engines to PostgreSQL
   - `psycopg2-binary`
   - `sqlalchemy`/`create_engine`
+ 
+FYI we'll also be using standard python library such as `os`, `io` and `csv`
 
 >Run the following commands in a Bash Shell:
 ```bash
@@ -37,11 +36,8 @@ source /home/michielsmulders/git-projects/r-wallstreetbots/python-venv/bin/activ
 
 # installe listed packages
 pip3 install dotenv
-pip3 install os
 pip3 install requests
 pip3 install pandas
-pip3 install io
-pip3 install csv
 pip3 install pathlib
 pip3 install datetime
 pip3 install psycopg2-binary
