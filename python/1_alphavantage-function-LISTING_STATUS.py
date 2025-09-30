@@ -41,6 +41,9 @@ try:
     today_str = date.today().isoformat()
     out_path = Path("/home/michielsmulders/data/csv_exports/listing_status")
     out_path_file = out_path / f"{today_str}.csv"
+
+    # add dt column
+    df['dt'] = today_str
     
     # write the data as a csv file to the file path
     df.to_csv(out_path_file
@@ -49,10 +52,7 @@ try:
                 ,header=True
                 ,index=False
                 ,encoding='utf-8')
-    
-    # add dt column
-    df['dt'] = today_str
-    
+
     # define the connection to the PostgreSQL database
     username = "loader"
     password = os.getenv("POSTGRESQL_LOADER_PWD")
