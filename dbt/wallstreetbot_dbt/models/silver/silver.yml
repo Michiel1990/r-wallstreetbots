@@ -7,3 +7,9 @@ models:
         tests:
           - unique
           - not_null
+  - name: fact_stock_prices
+    columns:
+      - name: str_stock_price_id
+        tests:
+          - unique
+          - not_null

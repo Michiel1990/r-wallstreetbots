@@ -30,8 +30,7 @@ engine = create_engine(connection_string)
 query_tickers = """
     select str_company_ticker as ticker from devsilver.dim_companies
     where bl_data_missing_at_dt_min_one = true
-    order by dt_ipo asc
-    limit 12;
+    order by dt_ipo asc limit 12;
 """
 df_tickers = pd.read_sql(query_tickers, engine)
 tickers = df_tickers['ticker'].tolist()
