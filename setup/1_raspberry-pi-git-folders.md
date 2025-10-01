@@ -80,5 +80,7 @@ cd csv_exports
 mkdir listing_status
 mkdir time_series_daily
 mkdir balance_sheet
-# final folder path eg: /home/michielsmulders/data/csv_exports/listing_status
+cd balance_sheet
+mkdir annual_reports
+mkdir quarterly_reports
 ```
