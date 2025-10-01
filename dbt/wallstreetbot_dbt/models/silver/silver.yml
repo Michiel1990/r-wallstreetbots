@@ -1,6 +1,12 @@
 version: 2
 
 models:
+  - name: dim_balance_sheets_annual
+    columns:
+      - name: str_balance_sheet_id
+        tests:
+          - unique
+          - not_null
   - name: dim_companies
     columns:
       - name: str_company_ticker

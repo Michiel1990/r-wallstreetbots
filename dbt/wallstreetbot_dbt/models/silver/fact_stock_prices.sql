@@ -19,6 +19,6 @@ from {{ source('alphavantage', 'time_series_daily') }}
 
 {% if is_incremental() %}
 	where "ticker" not in (
-		select str_company_ticker from {{ this }}
+		select distinct str_company_ticker from {{ this }}
 	)
 {% endif %}

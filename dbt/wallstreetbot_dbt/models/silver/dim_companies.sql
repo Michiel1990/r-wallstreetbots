@@ -30,3 +30,4 @@ select
 from {{ source('alphavantage', 'listing_status') }} ls
 left join {{ source('alphavantage', 'sp500_tickers') }} sp
 	on ls."symbol" = sp.symbol
+where ls."symbol" is not null
