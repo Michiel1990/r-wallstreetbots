@@ -1,16 +1,38 @@
+# dbt core
+## Installation
+>Run the following commands in a Bash Shell:
+```bash
+# create the dedicated dbt core virtual environment ("venv")
+python3 -m venv /home/michielsmulders/git-projects/r-wallstreetbots/dbt-core-venv
+
+# activate the venv
+source /home/michielsmulders/git-projects/r-wallstreetbots/dbt-core-venv/bin/activate
+
+# install both dbt-core and the PostgreSQL adapter
+python -m pip install dbt-core dbt-postgres
+
+# deactivate the dbt venv
+deactivate
+```
+
+## Initiation
+
 ### activate the dedicated dbt-core venv
+>Run the following commands in a Bash Shell:
+```bash
 source /home/michielsmulders/git-projects/r-wallstreetbots/dbt-core-venv/bin/activate
 cd /home/michielsmulders/git-projects/r-wallstreetbots/dbt
 dbt init
+```
 
-### follow prompts
+#### follow prompts
 - project name ("wallstreetbot_dbt")
 - postgresql connection
 - localhost
 - port 5432
 - credentials (postgreSQL "dev_dbt" user)
 
-### test
+#### test
 cd wallstreetbot_dbt
 
 dbt debug
@@ -19,7 +41,7 @@ dbt debug
 
 deactivate
 
-### remote VS code access
+#### remote VS code access
 https://code.visualstudio.com/docs/remote/ssh
 https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-ssh
 
