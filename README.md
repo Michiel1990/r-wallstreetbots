@@ -28,8 +28,8 @@ The project will be a flow (orchestrated with **Airflow**) that will run daily t
 	3. For each ticker fetch historical data on balance sheet as well as stock performance
 	4. Store the data locally (`.csv`)
 	5. Load the data into the database
-4. Long term data **storage** using `AWSCLI`
-	- Upload all CSV files (ex steps 1.3 and 3.4) to an Amazon S3 Bucket, which will server as our **Bronze** layer
+4. Long term data **storage** using `AWSCLI` (*still to be developed*)
+	- Upload all CSV files (ex steps 1.3 and 3.4) to an Amazon S3 Bucket, which will server as our **Bronze** layer or "data lake"
 	>the local UNIX server is relatively small (64GB) and we wouldn't want to lose data should it fail
  	>we will be using the Medallion architecture for our DWH
 5. **data cleanup** using `dbt`
