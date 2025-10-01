@@ -7,7 +7,7 @@ In order to have a real-world/fun project the idea emerged for starting a first 
 Therefore the **scope** is an attempt to acquire 25 years of historical data, on which we can apply Data Science and see if we can come up with BUY recommendations with a longterm vision (no get-rich-quick shenanigans).
 >`r-wallstreetbots` is a wink to the Reddit sub `r/wallstreetbets` which is filled with idiots who think they're the next Warren Buffet... so an appropiate repo name?
 ### Problem
-The **problem** I was faced with was the free API key offered by AlphaVantage, which only allows 25 API calls per day. And there is no "bulk" endpoint available so each API call can only fetch data from one company. The main advantage.
+The **problem** I was faced with was the free API key offered by AlphaVantage, which only allows 25 API calls per day. And there is no "bulk" endpoint available so each API call can only fetch data from one company. The main advantage is the absence of a time-limit, so one call for one ticker fetches all available historical data.
 >note that this is not a "real" problem as anyone who really needs the data can just buy a 50$/month license that allows 75 API calls *per minute*
 ### Solution
 The **solution** will be the design a daily (Air)flow, that uses these 25 API calls per day to fetch small bits of data at a time. The available data would thereby grow over time, and the Data Science running on it should therefore also get noticaebly better over time.
