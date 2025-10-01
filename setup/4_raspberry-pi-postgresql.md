@@ -92,9 +92,9 @@ GRANT USAGE ON SCHEMA rawalphavantage TO dbt_prd;
 GRANT SELECT ON ALL TABLES IN SCHEMA rawalphavantage TO dbt_dev;
 GRANT SELECT ON ALL TABLES IN SCHEMA rawalphavantage TO dbt_prd;
 
-ALTER DEFAULT PRIVILEGES IN SCHEMA rawalphavantage
+ALTER DEFAULT PRIVILEGES FOR USER loader IN SCHEMA rawalphavantage
 GRANT SELECT ON TABLES TO dbt_dev;
-ALTER DEFAULT PRIVILEGES IN SCHEMA rawalphavantage
+ALTER DEFAULT PRIVILEGES FOR USER loader IN SCHEMA rawalphavantage
 GRANT SELECT ON TABLES TO dbt_prd;
 
 # check the port (to be used later for remote access)
