@@ -1,5 +1,11 @@
 {{ config(
-    post_hook="GRANT SELECT ON {{ this }} TO loader;",
+    materialized='incremental',
+    unique_key='str_company_ticker',
+    incremental_strategy='merge',
+    indexes=[
+      {'columns': ['str_company_ticker'], 'unique': True}
+    ],
+    post_hook="GRANT SELECT ON {{ this }} TO loader;"
 ) }}
 
 select
