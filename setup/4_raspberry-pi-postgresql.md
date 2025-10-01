@@ -56,6 +56,14 @@ CREATE USER loader WITH ENCRYPTED PASSWORD '***';
 CREATE USER dbt_dev WITH ENCRYPTED PASSWORD '***';
 CREATE USER dbt_prd WITH ENCRYPTED PASSWORD '***';
 
+# Grant create privileges
+GRANT CREATE ON DATABASE wallstreetbots_dwh TO loader;
+ALTER ROLE loader WITH LOGIN;
+GRANT CREATE ON DATABASE wallstreetbots_dwh TO dbt_dev;
+ALTER ROLE dbt_dev WITH LOGIN;
+GRANT CREATE ON DATABASE wallstreetbots_dwh TO dbt_prd;
+ALTER ROLE dbt_prd WITH LOGIN;
+
 # create all "raw" schemas
 SET ROLE loader;
 CREATE SCHEMA rawalphavantage;
@@ -73,6 +81,7 @@ CREATE SCHEMA prdsilver;
 CREATE SCHEMA prdgold;
 
 # configure the access between roles/schemas
+SET ROLE postgres;
 GRANT CONNECT ON DATABASE wallstreetbots_dwh TO loader;
 GRANT CONNECT ON DATABASE wallstreetbots_dwh TO dbt_dev;
 GRANT CONNECT ON DATABASE wallstreetbots_dwh TO dbt_prd;
