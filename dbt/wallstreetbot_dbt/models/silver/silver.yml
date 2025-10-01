@@ -7,6 +7,18 @@ models:
         tests:
           - unique
           - not_null
+      - name: str_company_ticker
+        tests:
+          - not_null
+  - name: dim_balance_sheets_quarterly
+    columns:
+      - name: str_balance_sheet_id
+        tests:
+          - unique
+          - not_null
+      - name: str_company_ticker
+        tests:
+          - not_null
   - name: dim_companies
     columns:
       - name: str_company_ticker
@@ -18,4 +30,7 @@ models:
       - name: str_stock_price_id
         tests:
           - unique
+          - not_null
+      - name: str_company_ticker
+        tests:
           - not_null
