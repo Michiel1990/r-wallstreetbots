@@ -33,11 +33,11 @@ models:
   wallstreetbot_dbt:
     # Config indicated by + and applies to all files under models/example/
     bronze:
-      schema: bronze
+      schema: "{{ var('target_schema', 'dev') }}bronze"
       +materialized: table
     silver:
-      schema: silver
+      schema: "{{ var('target_schema', 'dev') }}silver"
       +materialized: table
     gold:
-      schema: gold
+      schema: "{{ var('target_schema', 'dev') }}gold"
       +materialized: table

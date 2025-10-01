@@ -2,9 +2,10 @@ version: 2
 
 sources:
     - name: alphavantage
-      database: raw
-      schema: alphavantage
+      database: wallstreetbots_dwh
+      schema: rawalphavantage
       tables:
           - name: listing_status
           - name: time_series_daily
-          - name: balance_sheet
+          - name: balance_sheet_annual
+          - name: balance_sheet_quarterly
