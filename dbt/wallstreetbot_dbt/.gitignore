@@ -1,4 +1,9 @@
-
+**/.DS_Store
+*.log
+*.env
+python-venv/
+airflow-venv/
+dbt-core-venv/
 target/
 dbt_packages/
 logs/

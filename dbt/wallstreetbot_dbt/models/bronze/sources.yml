@@ -1,0 +1,10 @@
+version: 2
+
+sources:
+    - name: alphavantage
+      database: raw
+      schema: alphavantage
+      tables:
+          - name: listing_status
+          - name: time_series_daily
+          - name: balance_sheet
