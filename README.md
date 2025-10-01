@@ -14,15 +14,15 @@ The **solution** will be a daily (Air)flow that uses these 25 API calls per day 
 
 # Project High Level Overview
 The project will be a flow (orchestrated with **Airflow**) that will run daily the following steps:
-1. **ETL-flow** in `python`
+1. **ETL-flow** using `python`
 	1. API request to AlphaVantage
 	2. fetch a list of all known publicly traded companies in the US (and their unique "tickers", e.g. Apple Inc. = `AAPL`)
 	3. Export the data locally (`.csv`)
 	4. Load the (same) data into a PostgreSQL database (hosted on the same local server; "the database" henceforth)
-2. **data cleanup** in `dbt` on the database
+2. **data cleanup** using `dbt`
 	1. Merge the list of tickers into the existing one
 	2. Prepare a model with the 12 next best candidates for acquiring data (eg based on oldest IPO for most data)
-3. **ETL-flow** in `python`
+3. **ETL-flow** using `python`
 	1. Connect to the database, fetch the 12 candidates and store in a list
 	2. Loop over the list to make API requests to AlphaVantage
 	3. For each ticker fetch historical data on balance sheet as well as stock performance
@@ -32,7 +32,7 @@ The project will be a flow (orchestrated with **Airflow**) that will run daily t
 	- Upload all CSV files (ex steps 1.3 and 3.4) to an Amazon S3 Bucket, which will server as our **Bronze** layer
 	>the local UNIX server is relatively small (64GB) and we wouldn't want to lose data should it fail
  	>we will be using the Medallion architecture for our DWH
-5. **data cleanup** in `dbt` on the database
+5. **data cleanup** using `dbt`
 	1. Clean and model the data into the **Silver** layer incrementally
 		- Facts:
 			- stock prices
@@ -43,11 +43,11 @@ The project will be a flow (orchestrated with **Airflow**) that will run daily t
 	2. Calculate metrics and outputs in the **Gold** layer
 		- the balance sheets will be used to calculate the evolution of "company health" over time
 		- the stock prices will be used to track the evolution of "company value" over time
-6. **Data Science** in `R` *TEMPLATE READY TO BE APPLIED*
+6. **Data Science** using `R` *TEMPLATE READY TO BE APPLIED*
 	1. use the k-means clustering algorithm to create "groups" of similar companies based on their "health" (balance sheet)
 	2. track the progress across a time dimension:
 		>which companies have improved/deteriorated the most?
-7. **Visualisation** in `Power BI` *STILL TO BE DEVELOPED*
+7. **Visualisation** using `Power BI` *STILL TO BE DEVELOPED*
 	- bring everything together to hopefully show a couple of clear cases of companies who
 		- have made the most progress improving their health over time
 		- but where the stock price has performed the worst over time
