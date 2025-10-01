@@ -19,7 +19,7 @@ username = "loader"
 password = POSTGRESQL_LOADER_PWD
 host = "localhost"
 port = "5432"
-db_name = "raw"
+db_name = "wallstreetbots_dwh"
 
 # create the SQLalchemy - PostgreSQL engine
 connection_string = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{db_name}"
@@ -27,7 +27,7 @@ engine = create_engine(connection_string)
 
 # Fetch the next 12 companies to fetch data from and store in a list
 query_tickers = """
-    select "symbol" as ticker from raw.alphavantage.listing_status
+    select "symbol" as ticker from rawalphavantage.listing_status
     where "symbol" in ('MSFT','GOOGL','AMZN');
 """
 df_tickers = pd.read_sql(query_tickers, engine)
@@ -39,7 +39,7 @@ BASE_URL = "https://www.alphavantage.co/query"
 today_str = date.today().isoformat()
 out_path = Path("/home/michielsmulders/data/csv_exports/listing_status")
 out_path = Path("/Users/akagi/Downloads")
-schema_name = 'alphavantage'
+schema_name = 'rawalphavantage'
 table_name = "time_series_daily"
 
 # execute the GET request for every ticker in the list
@@ -75,7 +75,7 @@ for ticker in tickers:
     print(f"Written {len(df)} rows into '{out_path_file}' successfully.")
 
     # make sure the data of today has not been loaded before
-    query = text("delete from raw.alphavantage.time_series_daily where dt = :query_dt and ticker = :query_ticker")
+    query = text("delete from rawalphavantage.time_series_daily where dt = :query_dt and ticker = :query_ticker")
     with engine.connect() as conn:
         conn.execute(query, {"query_dt": today_str, "query_ticker": ticker})
         conn.commit()
