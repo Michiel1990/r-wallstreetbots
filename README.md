@@ -43,11 +43,11 @@ The project will be a flow (orchestrated with **Airflow**) that will run daily t
 	2. Calculate metrics and outputs in the **Gold** layer
 		- the balance sheets will be used to calculate the evolution of "company health" over time
 		- the stock prices will be used to track the evolution of "company value" over time
-6. **Data Science** using `R` *TEMPLATE READY TO BE APPLIED*
+6. **Data Science** using `R` *(template ready to be applied)*
 	1. use the k-means clustering algorithm to create "groups" of similar companies based on their "health" (balance sheet)
 	2. track the progress across a time dimension:
 		>which companies have improved/deteriorated the most?
-7. **Visualisation** using `Power BI` *STILL TO BE DEVELOPED*
+7. **Visualisation** using `Power BI` (*still to be developed*)
 	- bring everything together to hopefully show a couple of clear cases of companies who
 		- have made the most progress improving their health over time
 		- but where the stock price has performed the worst over time
