@@ -51,8 +51,8 @@ username = "loader"
 password = POSTGRESQL_LOADER_PWD
 host = "localhost"
 port = "5432"
-db_name = "raw"
-schema_name = 'alphavantage'
+db_name = "wallstreetbots_dwh"
+schema_name = 'rawalphavantage'
 table_name = "listing_status"
 
 # create the SQLalchemy - PostgreSQL engine
@@ -60,7 +60,7 @@ connection_string = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/
 engine = create_engine(connection_string)
 
 # make sure the data of today has not been loaded before
-query = text("delete from raw.alphavantage.listing_status where dt = :query_dt")
+query = text("delete from rawalphavantage.listing_status where dt = :query_dt")
 with engine.connect() as conn:
     conn.execute(query, {"query_dt": today_str})
     conn.commit()
