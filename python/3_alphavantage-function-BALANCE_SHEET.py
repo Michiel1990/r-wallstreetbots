@@ -29,7 +29,7 @@ engine = create_engine(connection_string)
 # Fetch the next 12 companies to fetch data from and store in a list
 query_tickers = """
     select "symbol" as ticker from rawalphavantage.listing_status
-    where "symbol" in ('MSFT','GOOGL','AMZN');
+    where "symbol" in ('MSFT','GOOGL');
 """
 df_tickers = pd.read_sql(query_tickers, engine)
 tickers = df_tickers['ticker'].tolist()
@@ -37,9 +37,11 @@ tickers = df_tickers['ticker'].tolist()
 # several variables needed in the API loop
 BASE_URL = "https://www.alphavantage.co/query"
 today_str = date.today().isoformat()
-out_path = Path("/home/michielsmulders/data/csv_exports/balance_sheet")
+out_path_y = Path("/home/michielsmulders/data/csv_exports/balance_sheet/annual_reports")
+out_path_q = Path("/home/michielsmulders/data/csv_exports/balance_sheet/quarterly_reports")
 schema_name = 'rawalphavantage'
-table_name = "balance_sheet"
+table_name_y = "balance_sheet_annual"
+table_name_q = "balance_sheet_quarterly"
 
 # execute the GET request for every ticker in the list
 for ticker in tickers:
@@ -52,45 +54,79 @@ for ticker in tickers:
     resp = requests.get(BASE_URL, params=params, timeout=120)
 
     # store the response as a dataframe
-    df = pd.read_csv(StringIO(resp.text))
+    resp_json = resp.json()
+    df_y = pd.json_normalize(resp_json, record_path=['annualReports'])
+    df_q = pd.json_normalize(resp_json, record_path=['quarterlyReports'])
+
 
     # define the path for the final output
-    out_path_file = out_path / f"{ticker}.csv"
+    out_path_file_y = out_path_y / f"{ticker}.csv"
+    out_path_file_q = out_path_q / f"{ticker}.csv"
 
     # add dt column and name of ticker
-    df['dt'] = today_str
-    df['ticker'] = ticker
+    df_y['dt'] = today_str
+    df_q['dt'] = today_str
+    df_y['ticker'] = ticker
+    df_q['ticker'] = ticker
 
     # write the df data as a csv file to the file path
-    df.to_csv(out_path_file
+    df_y.to_csv(out_path_file_y
                 ,quoting=csv.QUOTE_ALL
                 ,sep=','
                 ,header=True
                 ,index=False
                 ,encoding='utf-8')
-    
+
+    df_q.to_csv(out_path_file_q
+                ,quoting=csv.QUOTE_ALL
+                ,sep=','
+                ,header=True
+                ,index=False
+                ,encoding='utf-8')
+
     # return status to airflow
-    print(f"Written {len(df)} rows into '{out_path_file}' successfully.")
+    print(f"Written {len(df_y)} rows into '{out_path_file_y}' successfully.")
+    print(f"Written {len(df_q)} rows into '{out_path_file_q}' successfully.")
 
     # make sure the data of the company has not been loaded before
     try:
-        query = text("delete from rawalphavantage.balance_sheet where ticker = :query_ticker")
+        query = text("delete from rawalphavantage.balance_sheet_annual where ticker = :query_ticker")
         with engine.connect() as conn:
             result = conn.execute(query, {"query_ticker": ticker})
-            print(f"{result.rowcount} rows deleted from {schema_name}.{table_name}")
+            print(f"{result.rowcount} rows deleted from {schema_name}.{table_name_y}")
+            conn.commit()
+            conn.close()
+    except SQLAlchemyError as e:
+        print(f"Database error: {str(e)}")
+
+    try:
+        query = text("delete from rawalphavantage.balance_sheet_quarterly where ticker = :query_ticker")
+        with engine.connect() as conn:
+            result = conn.execute(query, {"query_ticker": ticker})
+            print(f"{result.rowcount} rows deleted from {schema_name}.{table_name_q}")
             conn.commit()
             conn.close()
     except SQLAlchemyError as e:
         print(f"Database error: {str(e)}")
 
     # write the df data to a PostgreSQL database
-    df.to_sql(table_name
-              ,engine
-              ,schema = schema_name
-              ,if_exists="append"
-              ,index=False
-              ,method="multi"
-              ,chunksize=1000)
+    df_y.to_sql(table_name_y
+                ,engine
+                ,schema = schema_name
+                ,if_exists="append"
+                ,index=False
+                ,method="multi"
+                ,chunksize=1000)
+
+    df_q.to_sql(table_name_q
+                ,engine
+                ,schema = schema_name
+                ,if_exists="append"
+                ,index=False
+                ,method="multi"
+                ,chunksize=1000)
+
 
     # return succesfull run results to airflow
-    print(f"Inserted {len(df)} '{ticker}' rows into {schema_name}.{table_name} successfully.")
+    print(f"Inserted {len(df_y)} '{ticker}' rows into {schema_name}.{table_name_y} successfully.")
+    print(f"Inserted {len(df_q)} '{ticker}' rows into {schema_name}.{table_name_q} successfully.")
