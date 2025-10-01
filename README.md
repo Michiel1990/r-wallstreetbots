@@ -111,7 +111,8 @@ Documentation on how to use the API here:
 https://www.alphavantage.co/documentation/
 
 ## 5. AWS account
-
+Obviously an AWS account need to be available with the proper billing enabled. For now we will only be using the S3 bucket storage.
+> The 5GB free tier will be more than enough for now
 
 # Project Future
 It's highly in doubt the Project in it's current definition will result in actual meaningfull investment gains (maybe at some point I can add simulated Buys/Sells to dry-run how the portfolio would run).
