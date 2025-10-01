@@ -19,9 +19,9 @@ select
     ,quarter_end_date
     ,quarterly_close
     ,(quarterly_close - quarterly_close_min_1)
-        / quarterly_close
+        / quarterly_close_min_1
         as increase_qoq
     ,(quarterly_close - quarterly_close_min_4)
-        / quarterly_close
+        / quarterly_close_min_4
         as increase_yoy
 from cte_window_functions

@@ -25,6 +25,26 @@ models:
         tests:
           - unique
           - not_null
+  - name: dim_company_health_annual
+    columns:
+      - name: concat(str_company_ticker, dt_fiscal_ending)
+        tests:
+          - unique:
+              arguments:
+                name: dim_company_health_annual_PK_unique
+          - not_null:
+              arguments:
+                name: dim_company_health_annual_PK_not_null
+  - name: dim_company_health_quarterly
+    columns:
+      - name: concat(str_company_ticker, dt_fiscal_ending)
+        tests:
+          - unique:
+              arguments:
+                name: dim_company_health_annual_PK_unique
+          - not_null:
+              arguments:
+                name: dim_company_health_annual_PK_not_null
   - name: fact_stock_prices
     columns:
       - name: str_stock_price_id
