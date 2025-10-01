@@ -41,7 +41,7 @@ select
 		as asset_to_equity_ratio
 		-- Shows how much of the company’s assets are financed by shareholders versus creditors.
 	
-	,sp.dec_close
+	,sp.quarterly_close
 		/ (b.int_total_shareholder_equity / b.int_common_stock_shares_outstanding)
 		as price_to_book_ratio
 		-- Measures how the market values the company's net assets.
@@ -49,8 +49,8 @@ select
 from {{ ref('dim_balance_sheets_quarterly') }} b
 left join {{ ref('dim_companies') }} c
 	on b.str_company_ticker = c.str_company_ticker
-left join {{ ref('fact_stock_prices') }} sp
+left join {{ ref('fact_stock_prices_eoq') }} sp
 	on b.str_company_ticker = sp.str_company_ticker
-	and b.dt_fiscal_ending = sp.dt_price
+	and b.dt_fiscal_ending = sp.quarter_end_date
 
 -- NetIncome would be a nice addition for EPS and P/E ratios
