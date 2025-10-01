@@ -1,47 +1,57 @@
 # Project Definition
 ### Goal
-The **goal** of this repository is to showcase several Data Engineering / ETL / Analytics skillsets by showing as detailed a codebase as possible. To avoid needing public pre-defined and meaningless datasets a well-defined scope was designed aimed at maximising the number of technologies I would get in touch with.
-### Target
-Therefore the **scope** or **target** is starting a first draft of an "auto-invest" bot that can automatically fetch the required public stock market data (AlphaVantage), perform basic Data Science (`R`) and present BUY/SELL recommendations
->the repo name `r-wallstreetbots` is a wink to the Reddit sub `r/wallstreetbets` which is both a joke and a metaphor to show how little actual investment value I expect from the output ;-)
+The **goal** of this repository is to showcase several Data Engineering / ETL / Analytics skillsets by documenting as detailed a codebase as possible.
+### Scope
+In order to have a real-world/fun project the idea emerged for starting a first draft of a "millenial investment bot" that can help people of my generation secure financial independence in their retirement (who knows when *that* is going to happen for a 35 year old...).
+
+Therefore the **scope** is an attempt to acquire 25 years of historical data, on which we can apply Data Science and see if we can come up with BUY recommendations with a longterm vision (no get-rich-quick shenanigans).
+>`r-wallstreetbots` is a wink to the Reddit sub `r/wallstreetbets` which is filled with idiots who think they're the next Warren Buffet... so an appropiate repo name?
 ### Problem
 The **problem** I was faced with was the free API key offered by AlphaVantage, which only allows 25 API calls per day. And there is no "bulk" endpoint available so each API call can only fetch data from one company. The main advantage.
->note that this is not a "real" problem as any company needing the data could just buy a 50$/m license that allows 75 API calls *per minute*
+>note that this is not a "real" problem as anyone who really needs the data can just buy a 50$/month license that allows 75 API calls *per minute*
 ### Solution
 The **solution** will be the design a daily (Air)flow, that uses these 25 API calls per day to fetch small bits of data at a time. The available data would thereby grow over time, and the Data Science running on it should therefore also get noticaebly better over time.
 
 # Project High Level Overview
 The project will be a flow (orchestrated with **Airflow**) that will run daily the following steps:
-1. First **ETL-flow** in `python`
+1. **ETL-flow** in `python`
 	1. API request to AlphaVantage
 	2. fetch a list of all known publicly traded companies in the US (and their unique "tickers", e.g. Apple Inc. = `AAPL`)
 	3. Export the data locally (`.csv`)
 	4. Load the (same) data into a PostgreSQL database (hosted on the same local server; "the database" henceforth)
-2. First **data cleanup** in `dbt` on the database
+2. **data cleanup** in `dbt` on the database
 	1. Merge the list of tickers into the existing one
-	2. Prepare a model with the 12 next best candidates for the "true" API-call (eg based on highest market cap, oldest IPO for more data, etc.)
-3. Second **ETL-flow** in `python`
+	2. Prepare a model with the 12 next best candidates for acquiring data (eg based on oldest IPO for most data)
+3. **ETL-flow** in `python`
 	1. Connect to the database, fetch the 12 candidates and store in a list
 	2. Loop over the list to make API requests to AlphaVantage
-	3. For each ticker fetching historical data on balance sheet as well as stock performance
+	3. For each ticker fetch historical data on balance sheet as well as stock performance
 	4. Store the data locally (`.csv`)
 	5. Load the data into the database
 4. Long term data **storage** using `AWSCLI`
-	- Upload all CSV files (ex steps 1.3 and 3.4) to an Amazon S3 Bucket
+	- Upload all CSV files (ex steps 1.3 and 3.4) to an Amazon S3 Bucket, which will server as our **Bronze** layer
 	>the local UNIX server is relatively small (64GB) and we wouldn't want to lose data should it fail
-5. Second **data cleanup** in `dbt` on the database
-	1. Clean and model the data into the "Silver" layer incrementally (we will be using the Medallion architecture for our DWH)
+ 	>we will be using the Medallion architecture for our DWH
+5. **data cleanup** in `dbt` on the database
+	1. Clean and model the data into the **Silver** layer incrementally
 		- Facts:
 			- stock prices
 		- Dims:
 			- companies
 			- balance sheets
 			- generic date framework
-	2. Calculate metrics and outputs in the "Gold" layer
+	2. Calculate metrics and outputs in the **Gold** layer
 		- the balance sheets will be used to calculate the evolution of "company health" over time
 		- the stock prices will be used to track the evolution of "company value" over time
-6. **Data Science** in `R`
-
+6. **Data Science** in `R` *TEMPLATE READY TO BE APPLIED*
+	1. use the k-means clustering algorithm to create "groups" of similar companies based on their "health" (balance sheet)
+	2. track the progress across a time dimension:
+		>which companies have improved/deteriorated the most?
+7. **Visualisation** in `Power BI` *STILL TO BE DEVELOPED*
+	- bring everything together to hopefully show a couple of clear cases of companies who
+		- have made the most progress improving their health over time
+		- but where the stock price has performed the worst over time
+	>This last visualisation step will by definition not be visible in the repo
 
 # Project Architecture & Prerequisites
 The following outlines the essential hardware and configuration requirements needed to start the Git project, focusing on a **Raspberry Pi 5** as the primary development environment accessed remotely.
