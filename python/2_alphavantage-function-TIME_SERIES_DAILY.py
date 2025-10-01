@@ -76,7 +76,7 @@ for ticker in tickers:
 
     # make sure the data of the company has not been loaded before
     try:
-        query = text("delete from rawalphavantage.time_series_daily where dt = ticker = :query_ticker")
+        query = text("delete from rawalphavantage.time_series_daily where ticker = :query_ticker")
         with engine.connect() as conn:
             result = conn.execute(query, {"query_ticker": ticker})
             print(f"{result.rowcount} rows deleted from {schema_name}.{table_name}")
