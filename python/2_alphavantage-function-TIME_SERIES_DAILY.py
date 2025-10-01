@@ -33,18 +33,17 @@ query_tickers = """
 """
 df_tickers = pd.read_sql(query_tickers, engine)
 tickers = df_tickers['ticker'].tolist()
-tickers = ['MSFT', 'GOOGL', 'AMZN']
 
 # several variables needed in the API loop
 BASE_URL = "https://www.alphavantage.co/query"
 today_str = date.today().isoformat()
-out_path = Path("/home/michielsmulders/data/csv_exports/listing_status")
-out_path = Path("/Users/akagi/Downloads")
+out_path = Path("/home/michielsmulders/data/csv_exports/time_series_daily")
 schema_name = 'rawalphavantage'
 table_name = "time_series_daily"
 
 # execute the GET request for every ticker in the list
 for ticker in tickers:
+    # make the API call
     params = {
         "function": "TIME_SERIES_DAILY",
         "apikey": API_KEY,
@@ -54,11 +53,11 @@ for ticker in tickers:
     }
     resp = requests.get(BASE_URL, params=params, timeout=120)
 
-    # store the response (csv format) as a dataframe
+    # store the response as a dataframe
     df = pd.read_csv(StringIO(resp.text))
 
     # define the path for the final output
-    out_path_file = out_path / f"{ticker}_{today_str}.csv"
+    out_path_file = out_path / f"{ticker}.csv"
 
     # add dt column and name of ticker
     df['dt'] = today_str
@@ -76,11 +75,15 @@ for ticker in tickers:
     print(f"Written {len(df)} rows into '{out_path_file}' successfully.")
 
     # make sure the data of the company has not been loaded before
-    query = text("delete from rawalphavantage.time_series_daily where dt = ticker = :query_ticker")
-    with engine.connect() as conn:
-        conn.execute(query, {"query_ticker": ticker})
-        conn.commit()
-        conn.close()
+    try:
+        query = text("delete from rawalphavantage.time_series_daily where dt = ticker = :query_ticker")
+        with engine.connect() as conn:
+            result = conn.execute(query, {"query_ticker": ticker})
+            print(f"{result.rowcount} rows deleted from {schema_name}.{table_name}")
+            conn.commit()
+            conn.close()
+    except SQLAlchemyError as e:
+        print(f"Database error: {str(e)}")
 
     # write the df data to a PostgreSQL database
     df.to_sql(table_name
@@ -92,4 +95,4 @@ for ticker in tickers:
               ,chunksize=1000)
 
     # return succesfull run results to airflow
-    print(f"Inserted {len(df)} rows into PostgreSQL table '{table_name}' for ticker '{ticker}' successfully.")
+    print(f"Inserted {len(df)} '{ticker}' rows into {schema_name}.{table_name} successfully.")
