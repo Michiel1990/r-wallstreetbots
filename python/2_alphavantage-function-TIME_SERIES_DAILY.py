@@ -74,10 +74,10 @@ for ticker in tickers:
     # return status to airflow
     print(f"Written {len(df)} rows into '{out_path_file}' successfully.")
 
-    # make sure the data of today has not been loaded before
-    query = text("delete from rawalphavantage.time_series_daily where dt = :query_dt and ticker = :query_ticker")
+    # make sure the data of the company has not been loaded before
+    query = text("delete from rawalphavantage.time_series_daily where dt = ticker = :query_ticker")
     with engine.connect() as conn:
-        conn.execute(query, {"query_dt": today_str, "query_ticker": ticker})
+        conn.execute(query, {"query_ticker": ticker})
         conn.commit()
         conn.close()
 

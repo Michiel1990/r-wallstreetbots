@@ -60,11 +60,15 @@ connection_string = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/
 engine = create_engine(connection_string)
 
 # make sure the data of today has not been loaded before
-query = text("delete from rawalphavantage.listing_status where dt = :query_dt")
-with engine.connect() as conn:
-    conn.execute(query, {"query_dt": today_str})
-    conn.commit()
-    conn.close()
+try:
+    query = text("delete from rawalphavantage.listing_status where dt = :query_dt")
+    with engine.connect() as conn:
+        result = conn.execute(query, {"query_dt": today_str})
+        print(f"{result.rowcount} rows deleted from {schema_name}.{table_name}")
+        conn.commit()
+        conn.close()
+except SQLAlchemyError as e:
+    print(f"Database error: {str(e)}")
 
 # write the df data to a PostgreSQL database
 df.to_sql(table_name
