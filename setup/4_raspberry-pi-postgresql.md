@@ -34,44 +34,59 @@ psql
 ```
 
 ### database configuration
+Usually I prefer a set-up with several database objects (raw/dev/prd/...) with dedicated roles so each object is clearly defined. A "dbt development" role for example would have full ownership of dev, reading rights only on a raw, and no rights on prd, etc.
+
+As PostgreSQL does not allow cross-database queries (the dbt dev role for example can not write a table to dev while reading data from raw) we have three possible options:
+- create a Foreign Data Wrapper
+- periodically load all raw data to both dev and prd
+- use schemas within one datase to mimic the above mentioned seperated environments
+
+I will be choosing the third option, as that is for example also how you handle the issue on a modern platform like GCP Bigquery (Bigquery has no db/schema/table hierarchy, only "dataset"/table).
+
+It does require proper config from the dbt side but we'll get into that later.
+
 >Run the following commands in the psql Shell:
 ```sql
-# create the raw database and loading user (for storing raw stock market data)
-CREATE DATABASE raw;
+# create the wallstreetbots_dwh database 
+CREATE DATABASE wallstreetbots_dwh;
+\c wallstreetbots_dwh
+
+# create all users 
 CREATE USER loader WITH ENCRYPTED PASSWORD '***';
-GRANT ALL PRIVILEGES ON DATABASE raw TO LOADER;
-ALTER DATABASE raw OWNER TO loader;
-
-# create the DEV database and dbt development user
-CREATE DATABASE dev;
 CREATE USER dbt_dev WITH ENCRYPTED PASSWORD '***';
-GRANT ALL PRIVILEGES ON DATABASE DEV TO dbt_dev;
-ALTER DATABASE dev OWNER TO dbt_dev;
-
-# create the PRD database and dbt production user
-CREATE DATABASE prd;
 CREATE USER dbt_prd WITH ENCRYPTED PASSWORD '***';
-GRANT ALL PRIVILEGES ON DATABASE prd TO dbt_prd;
-ALTER DATABASE prd OWNER TO dbt_prd;
 
-# Switch to the loader role and create schema in raw
+# create all "raw" schemas
 SET ROLE loader;
-\c raw
-CREATE SCHEMA alphavatage;
+CREATE SCHEMA rawalphavantage;
 
-# Switch to the dbt_dev role and create schemas in dev
+# create all "dev" schemas
 SET ROLE dbt_dev;
-\c dev
-CREATE SCHEMA bronze;
-CREATE SCHEMA silver;
-CREATE SCHEMA gold;
+CREATE SCHEMA devbronze;
+CREATE SCHEMA devsilver;
+CREATE SCHEMA devgold;
 
-# Switch to the dbt_prd role and create schemas in prd
+# create all "prd" schemas
 SET ROLE dbt_prd;
-\c prd
-CREATE SCHEMA bronze;
-CREATE SCHEMA silver;
-CREATE SCHEMA gold;
+CREATE SCHEMA prdbronze;
+CREATE SCHEMA prdsilver;
+CREATE SCHEMA prdgold;
+
+# configure the access between roles/schemas
+GRANT CONNECT ON DATABASE wallstreetbots_dwh TO loader;
+GRANT CONNECT ON DATABASE wallstreetbots_dwh TO dbt_dev;
+GRANT CONNECT ON DATABASE wallstreetbots_dwh TO dbt_prd;
+
+GRANT USAGE ON SCHEMA rawalphavantage TO dbt_dev;
+GRANT USAGE ON SCHEMA rawalphavantage TO dbt_prd;
+
+GRANT SELECT ON ALL TABLES IN SCHEMA rawalphavantage TO dbt_dev;
+GRANT SELECT ON ALL TABLES IN SCHEMA rawalphavantage TO dbt_prd;
+
+ALTER DEFAULT PRIVILEGES IN SCHEMA rawalphavantage
+GRANT SELECT ON TABLES TO dbt_dev;
+ALTER DEFAULT PRIVILEGES IN SCHEMA rawalphavantage
+GRANT SELECT ON TABLES TO dbt_prd;
 
 # check the port (to be used later for remote access)
 show PORT;
