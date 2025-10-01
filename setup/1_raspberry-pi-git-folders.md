@@ -52,10 +52,6 @@ touch r/kmeans_clustering.r
 mkdir -p dbt
 touch dbt/readme.md
 
-# Create bi folder and empty file
-mkdir bi
-touch bi/dashboard_notes.md
-
 # Create docs folder and empty documentation files
 mkdir docs
 touch docs/architecture_diagram.png
