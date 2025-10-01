@@ -16,8 +16,8 @@ select
         as debt_score
 
     ,((1 - asset_to_equity_ratio) * 33.33)
-    ,(book_value_per_share * 33.33)
-    ,((1 - price_to_book_ratio) * 33.33)
+    +(book_value_per_share * 33.33)
+    +((1 - price_to_book_ratio) * 33.33)
         as equity_score
 
 from {{ ref('dim_company_health_quarterly') }}
