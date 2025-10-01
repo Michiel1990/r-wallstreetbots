@@ -13,9 +13,11 @@ with cte_window_functions as (
             as quarterly_close_min_4
     from {{ ref('fact_stock_prices_eoq') }}
 )
+
 select
     str_company_ticker
     ,quarter_end_date
+    ,quarterly_close
     ,(quarterly_close - quarterly_close_min_1)
         / quarterly_close
         as increase_qoq

@@ -46,10 +46,6 @@ select
 		as price_to_book_ratio
 		-- Measures how the market values the company's net assets.
 
--- positive is good KPI:
-	,b.int_total_current_assets - b.int_total_current_liabilities
-		as working_capital
-
 from {{ ref('dim_balance_sheets_quarterly') }} b
 left join {{ ref('dim_companies') }} c
 	on b.str_company_ticker = c.str_company_ticker
