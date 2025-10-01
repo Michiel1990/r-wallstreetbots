@@ -9,3 +9,4 @@ sources:
           - name: time_series_daily
           - name: balance_sheet_annual
           - name: balance_sheet_quarterly
+          - name: sp500_tickers
