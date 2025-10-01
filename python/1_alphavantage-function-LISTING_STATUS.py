@@ -60,28 +60,17 @@ table_name = "listing_status"
 connection_string = f"postgresql+psycopg2://{username}:{password}@{host}:{port}/{db_name}"
 engine = create_engine(connection_string)
 
-# make sure the data of today has not been loaded before
-try:
-    query = text("delete from rawalphavantage.listing_status where dt = :query_dt")
-    with engine.connect() as conn:
-        result = conn.execute(query, {"query_dt": today_str})
-        print(f"{result.rowcount} rows deleted from {schema_name}.{table_name}")
-        conn.commit()
-        conn.close()
-except SQLAlchemyError as e:
-    print(f"Database error: {str(e)}")
-
 # write the df data to a PostgreSQL database
 df.to_sql(table_name
             ,engine
             ,schema = schema_name
-            ,if_exists="append"
+            ,if_exists="replace"
             ,index=False
             ,method="multi"
             ,chunksize=1000)
 
 # return succesfull run results to airflow
-print(f"Inserted {len(df)} rows into {schema_name}.{table_name} successfully.")
+print(f"Wrote {len(df)} rows into {schema_name}.{table_name} successfully.")
 
 
 
