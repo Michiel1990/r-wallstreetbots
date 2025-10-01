@@ -82,3 +82,10 @@ df.to_sql(table_name
 
 # return succesfull run results to airflow
 print(f"Inserted {len(df)} rows into {schema_name}.{table_name} successfully.")
+
+
+
+# execute after first load in PostgreSQL
+#set role loader;
+#CREATE INDEX listing_status_idx_dt ON rawalphavantage.listing_status ("dt");
+#CREATE INDEX listing_status_idx_dt_symbol ON rawalphavantage.listing_status ("dt", "symbol");

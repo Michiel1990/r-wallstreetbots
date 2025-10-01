@@ -96,3 +96,10 @@ for ticker in tickers:
 
     # return succesfull run results to airflow
     print(f"Inserted {len(df)} '{ticker}' rows into {schema_name}.{table_name} successfully.")
+
+
+
+# execute after first load in PostgreSQL
+#set role loader;
+#CREATE INDEX time_series_daily_idx_ticker ON rawalphavantage.time_series_daily ("ticker");
+#CREATE INDEX time_series_daily_idx_ticker_timestamp ON rawalphavantage.time_series_daily ("ticker", "timestamp");

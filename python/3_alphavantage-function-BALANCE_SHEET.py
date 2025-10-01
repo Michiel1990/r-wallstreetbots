@@ -130,3 +130,10 @@ for ticker in tickers:
     # return succesfull run results to airflow
     print(f"Inserted {len(df_y)} '{ticker}' rows into {schema_name}.{table_name_y} successfully.")
     print(f"Inserted {len(df_q)} '{ticker}' rows into {schema_name}.{table_name_q} successfully.")
+
+
+
+# execute after first load in PostgreSQL
+#set role loader;
+#CREATE INDEX balance_sheet_annual_idx_ticker ON rawalphavantage.balance_sheet_annual ("ticker");
+#CREATE INDEX balance_sheet_quarterly_idx_ticker ON rawalphavantage.balance_sheet_quarterly ("ticker");
