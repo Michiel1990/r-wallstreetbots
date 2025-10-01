@@ -7,6 +7,7 @@ import csv
 from pathlib import Path
 from datetime import date
 from sqlalchemy import create_engine, text
+from sqlalchemy.exc import SQLAlchemyError
 
 
 # read the .env file to fetch the secrets

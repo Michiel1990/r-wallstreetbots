@@ -7,6 +7,7 @@ import csv
 from pathlib import Path
 from datetime import date
 from sqlalchemy import create_engine, text
+from sqlalchemy.exc import SQLAlchemyError
 
 
 # read the .env file to fetch the secrets
@@ -80,4 +81,4 @@ df.to_sql(table_name
             ,chunksize=1000)
 
 # return succesfull run results to airflow
-print(f"Inserted {len(df)} rows into PostgreSQL table '{table_name}' successfully.")
+print(f"Inserted {len(df)} rows into {schema_name}.{table_name} successfully.")
