@@ -34,3 +34,11 @@ models:
       - name: str_company_ticker
         tests:
           - not_null
+  - name: fact_stock_prices_eoq
+    columns:
+      - name: quarterly_close
+        tests:
+          - not_null:
+              config:
+                severity: warn
+                error_if: ">1000"

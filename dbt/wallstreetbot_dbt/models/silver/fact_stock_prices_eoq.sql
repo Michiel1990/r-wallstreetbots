@@ -31,6 +31,6 @@ select
 	str_company_ticker
 	,quarter_end_date
 	,coalesce(dec_close,dec_close_min_1,dec_close_plus_1,dec_close_min_2,dec_close_plus_2)
-		as dec_close
+		as quarterly_close
 from cte_window_functions
 where date_day = quarter_end_date
