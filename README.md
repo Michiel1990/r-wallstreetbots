@@ -115,10 +115,8 @@ Obviously an AWS account need to be available with the proper billing enabled. F
 > The 5GB free tier will be more than enough for now
 
 # Project Future
-It's highly in doubt the Project in it's current definition will result in actual meaningfull investment gains (maybe at some point I can add simulated Buys/Sells to dry-run how the portfolio would run).
-
-To have truly valuable investment insights it would need the following upgrades:
-- (much) more **data** for training and/or mining. So preferably start looking at Options trading (puts/calls) which is datasets orders of magnitude bigger than classic Stock trading (buys/sells)
+To have truly valuable investment insights the project would need the following upgrades:
+- (much) more **data** for training and/or mining. Maybe even start looking at Options trading (puts/calls) which is datasets orders of magnitude bigger than classic Stock trading (buys/sells)
 - (much) more intelligent **Data Science**, involving true Machine Learning or LLM models
 - out of the previous would follow the need for (much) better **infrastructure**:
 	- Host Airflow in the Cloud (e.g. AWS)
