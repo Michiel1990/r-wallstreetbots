@@ -1,0 +1,9 @@
+version: 2
+
+models:
+  - name: dim_companies
+    columns:
+      - name: str_company_ticker
+        tests:
+          - unique
+          - not_null
