@@ -1,0 +1,13 @@
+version: 2
+
+models:
+  - name: company_kpi_performance
+    columns:
+      - name: concat(str_company_ticker, dt_fiscal_ending)
+        tests:
+          - unique:
+              arguments:
+                name: company_kpi_performance_PK_unique
+          - not_null:
+              arguments:
+                name: company_kpi_performance_PK_not_null
