@@ -32,12 +32,12 @@ clean-targets:         # directories to be removed by `dbt clean`
 models:
   wallstreetbot_dbt:
     # Config indicated by + and applies to all files under models/example/
-    bronze:
+    1_bronze:
       schema: "{{ var('target_schema', 'dev') }}bronze"
       +materialized: table
-    silver:
+    2_silver:
       schema: "{{ var('target_schema', 'dev') }}silver"
       +materialized: table
-    gold:
+    3_gold:
       schema: "{{ var('target_schema', 'dev') }}gold"
       +materialized: table
