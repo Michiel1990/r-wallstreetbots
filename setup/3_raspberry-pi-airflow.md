@@ -41,7 +41,7 @@ deactivate
 >Afterwards you can start the webserver and/or scheduler in a Bash Shell:
 ```bash
 # always activate airflow-venv first
-source /home/michielsmulders/git-projects/r-wallstreetbots/python-venv/bin/activate
+source /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/bin/activate
 airflow webserver --port 8080
 airflow scheduler
 ```
