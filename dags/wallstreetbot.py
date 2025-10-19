@@ -25,10 +25,10 @@ with DAG(
             # cd to the repo folder
             "cd /home/michielsmulders/git-projects/r-wallstreetbots && "
             # make sure the agent can SSH to github.com
-            "eval \"$(ssh-agent -s)\" && "
+            "(eval \"$(ssh-agent -s)\" && "
             "ssh-add /home/michielsmulders/.ssh/pi_github_key && "
             # pull the repo
-            "git pull "
+            "git pull) "
             # append the logs if needed
             ">> /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/logs/update_local_git_repo.log 2>&1"
         ),
@@ -54,7 +54,7 @@ with DAG(
             # cd to the project
             "cd /home/michielsmulders/git-projects/r-wallstreetbots/dbt/wallstreetbot_dbt && "
             # debug and build dim_companies
-            "dbt debug && dbt build --select dim_companies "
+            "(dbt debug && dbt build --select dim_companies) "
             ">> /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/logs/dbt_companies.log 2>&1"
         ),
     )
@@ -91,7 +91,7 @@ with DAG(
             # cd to the project
             "cd /home/michielsmulders/git-projects/r-wallstreetbots/dbt/wallstreetbot_dbt && "
             # build silver/gold layer and generate docs
-            "dbt build --exclude dim_companies dbt_get_dates && dbt docs generate "
+            "(dbt build --exclude dim_companies dbt_get_dates && dbt docs generate) "
             ">> /home/michielsmulders/git-projects/r-wallstreetbots/airflow-venv/logs/dbt_silver_gold.log 2>&1"
         ),
     )
