@@ -96,5 +96,4 @@ with DAG(
         ),
     )
 
-    update_local_git_repo >> etl_listing_status >> dbt_companies 
-    >> etl_time_series_daily >> etl_balance_sheet >> dbt_silver_gold
+    update_local_git_repo >> etl_listing_status >> dbt_companies >> etl_time_series_daily >> etl_balance_sheet >> dbt_silver_gold
