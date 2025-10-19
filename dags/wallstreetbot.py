@@ -15,7 +15,7 @@ with DAG(
     dag_id="wallstreetbot",
     default_args=default_arguments,
     schedule_interval="0 9 * * *",
-    start_date=datetime(2025, 10, 1),
+    start_date=datetime(2025, 10, 20),
     max_active_runs=1,
 ) as dag:
 
